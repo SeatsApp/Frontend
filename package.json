@@ -1,0 +1,32 @@
+{
+  "name": "seatapp",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/styles": "^4.11.4",
+    "@mui/icons-material": "^5.2.0",
+    "@mui/material": "^5.2.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/x-data-grid": "^5.1.0",
+
+    "expo": "^44.0.6",
+    "expo-status-bar": "~1.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-native": "0.68.0",
+    "react-native-web": "^0.17.2",
+    "expo-updates": "~0.11.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true
+}
