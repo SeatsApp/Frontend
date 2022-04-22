@@ -30,6 +30,9 @@ export default function CreateSeat() {
                   message: 'Name is required',
                 },
               },
+              textInputProps: {
+                label: 'Name',
+              },
             },
           ]}
         />
