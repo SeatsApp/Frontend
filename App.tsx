@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native'
 import HomePage from './src/seats/components/HomePage';
-import CreateSeat from './src/seats/components/CreateSeat';
+import CreateSeat from './src/createSeats/components/CreateSeat';
 import { Provider as PaperProvider } from 'react-native-paper'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ToastContainer } from '@jamsch/react-native-toastify';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Home: undefined;

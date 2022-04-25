@@ -1,15 +1,28 @@
 import React from 'react'
-import { View } from 'react-native'
-<<<<<<< HEAD
+import { ScrollView, View, DeviceEventEmitter } from 'react-native'
 import AddSeatButton from './AddSeatButton'
-=======
-import Menu from './Menu'
->>>>>>> eeddc96 (added a simple layout + a form to create a seat)
+import CardSeat from './CardSeat';
+import { Seat } from '../types/Seat';
+import useSeat from '../../shared/hooks/useSeat';
 
 export default function HomePage() {
+  const { readSeats } = useSeat();
+
+  const { seats, refetchSeats } = readSeats()
+
+  DeviceEventEmitter.addListener("event.createSeat", () =>
+    refetchSeats());
+
   return (
     <View>
-      <AddSeatButton/>
+      <AddSeatButton />
+      <ScrollView>
+        {
+          seats.map((seat: Seat) => (
+            <CardSeat key={seat.id} seat={seat}></CardSeat>
+          ))
+        }
+      </ScrollView>
     </View>
   )
 }
