@@ -4,7 +4,7 @@ import { AxiosPromise } from 'axios'
 import renderer from "react-test-renderer";
 import { mocked } from "ts-jest/utils"; // a helper function from ts-jest
 import useSeat from "../src/shared/hooks/useSeat";
-import CreateSeat from "../src/createSeats/components/CreateSeat";
+import CreateSeat from "../src/createSeats/components/CreateSeat"
 
 test("renders correctly", () => {
   const tree = renderer.create(<CreateSeat />).toJSON();

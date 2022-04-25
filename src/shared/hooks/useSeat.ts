@@ -15,6 +15,12 @@ export default function useSeat() {
     })
   }
 
+  async function deleteSeat(seatId:number) {
+    return axiosClient({
+      url: '/api/seats/' + seatId, method: 'delete',
+    })
+  }
+
   function getSeats() {
     const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seats`, []);
     return {
@@ -25,6 +31,7 @@ export default function useSeat() {
 
   return {
     createSeat,
-    readSeats: getSeats
+    readSeats: getSeats,
+    deleteSeat
   };
 }
