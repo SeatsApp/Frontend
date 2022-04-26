@@ -21,25 +21,5 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
-    "no-use-before-define": "off",
-    "react/function-component-definition": "off",
-    "import/extensions": "off",
-    "import/no-unresolved": "off",
-    "react/no-array-index-key": "warn",
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn"],
-    "lines-between-class-members": "off",
-    "import/no-extraneous-dependencies": "off",
-    "no-void": "off",
-    "no-shadow": "off",
-    "react/no-unescaped-entities": "off",
-    "no-undef": "off",
-    "import/prefer-default-export": "off",
-    "react/jsx-fragments": "off",
-    "prefer-destructuring": "warn",
-    "prefer-template": "off",
-    "react/jsx-props-no-spreading": "off",
-    "no-nested-ternary": "off"
     }
 }

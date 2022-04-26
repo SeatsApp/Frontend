@@ -1,12 +1,36 @@
+// eslint-disable-next-line no-undef
 module.exports = {
-    preset: 'react-native',
-    transform: {
-      '^.+\\.js$': require.resolve('react-native/jest/preprocessor.js'),
-    },
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.(tsx|ts|js)",
-      "App.js"
-    ],
-    "testResultsProcessor": "jest-sonar-reporter",
-  };
+  testEnvironment: "jsdom",
+  preset: "jest-expo",
+  globals: {
+    "ts-jest": {
+      tsconfig: {
+        jsx: "react"
+      }
+    }
+  },
+  transform: {
+    "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+    "^.+\\.tsx?$": "ts-jest"
+  },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "**/*.{ts,tsx}",
+    "!**/coverage/**",
+    "!**/node_modules/**",
+  ],
+  testResultsProcessor: "jest-sonar-reporter",
+  moduleFileExtensions: [
+    "js",
+    "ts",
+    "tsx"
+  ],
+  transformIgnorePatterns: [
+    "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+  ],
+  coverageReporters: [
+    "json-summary",
+    "text",
+    "lcov"
+  ]
+};
