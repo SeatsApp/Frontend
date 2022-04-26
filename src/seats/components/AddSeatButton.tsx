@@ -25,6 +25,7 @@ export default function AddSeatButton() {
                 small
                 icon="plus"
                 onPress={() => navigation.navigate('CreateSeat')}
+                testID={"FAB1"}
             />
         </Portal>
     );
