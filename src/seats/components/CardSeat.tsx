@@ -9,7 +9,7 @@ interface CardSeatProps {
 }
 
 export default function CardSeat({ seat }: CardSeatProps) {
-    const { deleteSeat } = useSeat();
+    const { deleteSeat, reserveSeat } = useSeat();
 
     return (
         <Card style={{ margin: 5 }}>
@@ -18,7 +18,12 @@ export default function CardSeat({ seat }: CardSeatProps) {
                 <Paragraph>Floor</Paragraph>
             </Card.Content>
             <Card.Actions>
-                <Button>Reserve</Button>
+
+                <Button disabled={seat.reserved} onPress={async () => {
+                    await reserveSeat(seat.id);
+                    DeviceEventEmitter.emit("event.refetchSeats", {});
+                }
+                }>Reserve</Button>
                 <Button onPress={async () => {
                     await deleteSeat(seat.id);
                     DeviceEventEmitter.emit("event.refetchSeats", {});
