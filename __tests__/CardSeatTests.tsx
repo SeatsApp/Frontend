@@ -62,4 +62,3 @@ test("Reserve api call on button press", () => {
         url: '/api/seats/' + 1 + '/reserve', method: 'patch'
     });
 });
-

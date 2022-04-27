@@ -18,6 +18,7 @@ export default function CardSeat({ seat }: CardSeatProps) {
                 <Paragraph>Floor</Paragraph>
             </Card.Content>
             <Card.Actions>
+
                 <Button disabled={seat.reserved} onPress={async () => {
                     await reserveSeat(seat.id);
                     DeviceEventEmitter.emit("event.refetchSeats", {});
