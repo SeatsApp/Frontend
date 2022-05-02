@@ -6,7 +6,8 @@ export default function useGet<T>(url: string, initialValue: T) {
 
   const fetchData = useCallback(async () => {
     const { data } = await axiosClient(url);
-    setFetchedData(data);
+    if (data !== undefined)
+      setFetchedData(data);
   }, [url]);
 
   useEffect(() => {

@@ -7,13 +7,20 @@ import useSeat from "../src/shared/hooks/useSeat";
 import CreateSeat from "../src/createSeats/components/CreateSeat"
 import {fireEvent, render} from "@testing-library/react-native";
 
+beforeEach(() => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(console, 'warn').mockImplementation(() => { });
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(console, 'error').mockImplementation(() => { });
+});
+
 test("renders correctly", () => {
   const tree = renderer.create(<CreateSeat />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 jest.mock("../src/utils/AxiosClient");
-const { createSeat } = useSeat()
+const { createSeat } = useSeat();
 
 test("should call api with correct parameters", async () => {
   // mock to resolve a Promise<void>
