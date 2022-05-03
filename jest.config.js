@@ -13,6 +13,9 @@ module.exports = {
     "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
     "^.+\\.tsx?$": "ts-jest"
   },
+  moduleNameMapper: {
+    "\\.(css|less|scss)$": "identity-obj-proxy"
+  },
   collectCoverage: true,
   collectCoverageFrom: [
     "**/*.{ts,tsx}",

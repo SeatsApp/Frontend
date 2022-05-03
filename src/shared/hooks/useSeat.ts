@@ -21,9 +21,13 @@ export default function useSeat() {
     })
   }
 
-  async function reserveSeat(seatId:number) {
+  async function reserveSeat(seatId:number, startTime:string, endTime:string) {
     return axiosClient({
       url: '/api/seats/' + seatId + '/reserve', method: 'patch',
+      data: JSON.stringify({ startTime: startTime, endTime: endTime }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
   }
 

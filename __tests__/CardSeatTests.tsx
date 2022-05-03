@@ -5,15 +5,23 @@ import useSeat from "../src/shared/hooks/useSeat";
 import {mocked} from "ts-jest/utils";
 import AxiosClient from "../src/utils/AxiosClient";
 import {AxiosPromise} from "axios";
-import {fireEvent, render} from "@testing-library/react-native";
+import Enzyme, {shallow} from "enzyme";
+import {Button} from "react-native-paper";
+import Adapter from "enzyme-adapter-react-16";
+
+Enzyme.configure({adapter: new Adapter()});
+
 
 test("renders the cardseat correctly", () => {
-    const tree = renderer.create(<CardSeat seat={{ id: 1, name: "1A", reserved: false }} />).toJSON();
+    const tree = renderer.create(<CardSeat seat={{id: 1, name: "1A"}}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
 jest.mock("../src/utils/AxiosClient");
-const { deleteSeat, reserveSeat } = useSeat()
+const {deleteSeat, reserveSeat} = useSeat();
+const startTime = "2022-02-22 14:00:00";
+const endtime = "2022-02-22 15:00:00";
+
 
 test("Delete should call api with correct parameters", async () => {
     // mock to resolve a Promise<void>
@@ -30,9 +38,9 @@ test("Delete api call on button press", () => {
     // mock to resolve a Promise<void>
     mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
 
-    const { getByText } = render(<CardSeat seat={{id: 1, name: "Test", reserved: false}} />);
+    const wrapper = shallow(<CardSeat seat={{id: 1, name: "Test"}}/>);
 
-    fireEvent.press(getByText('Delete'));
+    wrapper.find(Button).at(1).simulate('press');
 
     expect(AxiosClient).toHaveBeenCalledWith({
         url: '/api/seats/' + 1, method: 'delete'
@@ -43,22 +51,25 @@ test("Reserve should call api with correct parameters", async () => {
     // mock to resolve a Promise<void>
     mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
 
-    await reserveSeat(1);
+    await reserveSeat(1, startTime, endtime);
 
     expect(AxiosClient).toHaveBeenCalledWith({
-        url: '/api/seats/' + 1 + '/reserve', method: 'patch'
+        url: '/api/seats/' + 1 + '/reserve', method: 'patch',
+        data: JSON.stringify({startTime: startTime, endTime: endtime}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 });
 
-test("Reserve api call on button press", () => {
-    // mock to resolve a Promise<void>
-    mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
+test("changeState on button press", async () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState');
+    useStateSpy.mockImplementation(() => [false, setState])
 
-    const { getByText } = render(<CardSeat seat={{id: 1, name: "Test", reserved: false}} />);
+    const wrapper = shallow(<CardSeat seat={{id: 1, name: "Test"}}/>);
 
-    fireEvent.press(getByText('Reserve'));
+    wrapper.find(Button).at(0).simulate('press');
 
-    expect(AxiosClient).toHaveBeenCalledWith({
-        url: '/api/seats/' + 1 + '/reserve', method: 'patch'
-    });
+    expect(setState).toHaveBeenCalledTimes(1);
 });
