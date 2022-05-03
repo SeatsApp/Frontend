@@ -14,8 +14,8 @@ Enzyme.configure({adapter: new Adapter()});
 jest.mock("../src/utils/AxiosClient");
 
 test("renders correctly", () => {
-    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test"}} setDialogVisible={() => true}
-                                                    visible={true}/>).toJSON();
+    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00"}]}} setDialogVisible={() => true}
+                                                    visible={true} date={new Date()}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -24,10 +24,10 @@ test("handleReserve succesfull test", async () => {
 
     jest.spyOn(React, 'useState')
         .mockImplementationOnce(() => ["15:00", () => null])
-        .mockImplementationOnce(() => ["16:00", () => null]).mockImplementationOnce(() => [new Date(2024, 11, 24, 10, 33, 30, 0), () => null]);
+        .mockImplementationOnce(() => ["16:00", () => null])
 
-    const wrapper = shallow(<ReserveSeatDialog seat={{id: 1, name: "test"}} setDialogVisible={() => true}
-                                               visible={true}/>);
+    const wrapper = shallow(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+                                               visible={true} date={new Date(2024,11,24, 10,5,6)}/>);
 
     wrapper.find(Button).at(0).simulate('press');
 
@@ -42,8 +42,8 @@ test("handleReserve succesfull test", async () => {
 test("handleReserve with failure", async () => {
     const alertMock = jest.spyOn(toast,'error').mockImplementation();
 
-    const screen = shallow(<ReserveSeatDialog seat={{id: 1, name: "test"}} setDialogVisible={() => true}
-                                               visible={true}/>);
+    const screen = shallow(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+                                               visible={true} date={new Date()}/>);
 
     screen.find(Button).at(0).simulate('press');
 

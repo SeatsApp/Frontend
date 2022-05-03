@@ -13,7 +13,12 @@ Enzyme.configure({adapter: new Adapter()});
 
 
 test("renders the cardseat correctly", () => {
-    const tree = renderer.create(<CardSeat seat={{id: 1, name: "1A"}}/>).toJSON();
+    const tree = renderer.create(<CardSeat seat={{id: 1, name: "1A", reservations: []}} date={new Date()}/>).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+test("renders the cardseat correctly with reservation", () => {
+    const tree = renderer.create(<CardSeat seat={{id: 1, name: "1A", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00"}]}} date={new Date()}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -38,7 +43,7 @@ test("Delete api call on button press", () => {
     // mock to resolve a Promise<void>
     mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
 
-    const wrapper = shallow(<CardSeat seat={{id: 1, name: "Test"}}/>);
+    const wrapper = shallow(<CardSeat seat={{id: 1, name: "1A", reservations: []}} date={new Date()}/>);
 
     wrapper.find(Button).at(1).simulate('press');
 
@@ -67,7 +72,7 @@ test("changeState on button press", async () => {
     const useStateSpy = jest.spyOn(React, 'useState');
     useStateSpy.mockImplementation(() => [false, setState])
 
-    const wrapper = shallow(<CardSeat seat={{id: 1, name: "Test"}}/>);
+    const wrapper = shallow(<CardSeat seat={{id: 1, name: "1A", reservations: []}} date={new Date()}/>);
 
     wrapper.find(Button).at(0).simulate('press');
 

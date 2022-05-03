@@ -39,9 +39,18 @@ export default function useSeat() {
     };
   }
 
+  function getSeatsAndReservationsByDate(date: string) {
+    const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seatsReservationsFromDate?date=` + date, []);
+    return {
+      seats,
+      refetchSeats,
+    };
+  }
+
   return {
     createSeat,
     readSeats: getSeats,
+    readSeatsByDate: getSeatsAndReservationsByDate,
     deleteSeat,
     reserveSeat
   };

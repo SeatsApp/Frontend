@@ -1,30 +1,38 @@
-import React, {useState} from "react";
-import {View} from "react-native";
-import DropDown from "react-native-paper-dropdown";
-import {getTimeslots} from "../../seats/types/Timeslots";
+import React from "react";
+import {Platform, TextInput, View} from "react-native";
+import TimePickerDropDown from "./TimePickerDropDown";
 
 interface Props {
-    timeName: string,
-    updateState: (time: string) => void,
-    time: string
+    startTime: string,
+    endTime: string,
+    setStartTime: (startTimeWith: string) => void,
+    setEndTime: (endTimeWith: string) => void,
 }
 
-export default function TimePicker({timeName, updateState, time}: Props) {
-    const [showDropDown, setShowDropDown] = useState(false);
-
+export default function TimePicker({startTime, endTime, setEndTime, setStartTime}: Props) {
     return (
-        <View style={{margin: 5}}>
-            <DropDown
-                label={timeName}
-                mode={"outlined"}
-                visible={showDropDown}
-                showDropDown={() => setShowDropDown(true)}
-                onDismiss={() => setShowDropDown(false)}
-                value={time}
-                setValue={updateState}
-                list={getTimeslots()}
-            />
-            </View>
+        <>
+            {
+                Platform.OS === 'android' ? (
+                    <View style={{display: 'flex', flexDirection: 'row', alignSelf: 'center', alignItems: 'center'}}>
+                        <TimePickerDropDown updateState={setStartTime} time={startTime} timeName={'Start'}/>
+                        <TimePickerDropDown updateState={setEndTime} time={endTime} timeName={'End'}/>
+                    </View>
+                ) : <View style={{display: 'flex', flexDirection: 'row', alignSelf: 'center', alignItems: 'center'}}>
+                    <TextInput
+                        onChangeText={setStartTime}
+                        value={startTime}
+                        placeholder="Start hour"
+                        keyboardType="numeric"
+                    />
+                    <TextInput
+                        onChangeText={setEndTime}
+                        value={endTime}
+                        placeholder="End hour"
+                        keyboardType="numeric"
+                    />
+                </View>
+            }
+        </>
     )
 }
-

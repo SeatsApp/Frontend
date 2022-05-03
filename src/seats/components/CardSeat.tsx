@@ -1,26 +1,32 @@
 import React from 'react'
-import {Card, Button, Title, Paragraph, Portal} from 'react-native-paper';
+import {Card, Button, Title, Paragraph, Portal, Text} from 'react-native-paper';
 import {Seat} from '../types/Seat'
 import useSeat from "../../shared/hooks/useSeat";
 import {DeviceEventEmitter, View} from "react-native";
 import ReserveSeatDialog from "./ReserveSeatDialog";
 
 interface CardSeatProps {
-    seat: Seat
+    seat: Seat,
+    date:Date
 }
 
-export default function CardSeat({seat}: CardSeatProps) {
+export default function CardSeat({seat, date}: CardSeatProps) {
     const {deleteSeat} = useSeat();
     const [dialogVisible, setDialogVisible] = React.useState(false);
 
     return (
         <View>
             <Portal>
-                <ReserveSeatDialog visible={dialogVisible} setDialogVisible={setDialogVisible} seat={seat}/>
+                <ReserveSeatDialog date={date} visible={dialogVisible} setDialogVisible={setDialogVisible} seat={seat}/>
             </Portal>
                 <Card style={{margin: 5}}>
                     <Card.Content>
-                        <Title>{seat.name}</Title>
+                        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                            <Title style={{ marginRight: 4}}>{seat.name}</Title>
+                            <Text style={(seat.reservations.length > 0 ? {color: 'orange'} : {color: 'green'})}>
+                                {seat.reservations.length > 0 ? "Partially booked" : "Free"}
+                            </Text>
+                        </View>
                         <Paragraph>Floor</Paragraph>
                     </Card.Content>
                     <Card.Actions>

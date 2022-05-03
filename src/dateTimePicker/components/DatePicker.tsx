@@ -1,7 +1,7 @@
 import {Button} from "react-native-paper";
 import React from "react";
-import {DatePickerModal} from "react-native-paper-dates";
 import {View} from "react-native";
+import {DatePickerModal} from "react-native-paper-dates";
 
 interface Props {
     updateState: (date: Date) => void
