@@ -52,11 +52,13 @@ test("should call get api to refetch seats", async () => {
         data: [
             {
                 id: 1,
-                name: '1A'
+                name: '1A',
+                reservations: []
             },
             {
                 id: 2,
-                name: '2B'
+                name: '2B',
+                reservations: []
             }
         ],
     }
@@ -67,7 +69,8 @@ test("should call get api to refetch seats", async () => {
         data: [
             {
                 id: 1,
-                name: '1A'
+                name: '1A',
+                reservations: []
             }
         ],
     }

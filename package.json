@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@jamsch/react-native-toastify": "^0.1.2",
+    "@mdi/font": "^6.6.96",
+    "@mdi/js": "^6.6.96",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "@testing-library/react-hooks": "^8.0.0",

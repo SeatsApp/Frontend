@@ -7,11 +7,13 @@ import BuildingFloorPlan from '../../svg/buildings/BuildingFloorPlan';
 import {Companies} from '../../svg/buildings/Companies';
 import {Provider} from "react-native-paper";
 import { DeviceEventEmitter, View, ScrollView } from 'react-native';
+import DatePicker from "../../dateTimePicker/components/DatePicker";
 
 export default function HomePage() {
-    const {readSeats} = useSeat();
+    const [date, setDate] = React.useState<Date>(new Date());
+    const {readSeatsByDate} = useSeat();
 
-    const {seats, refetchSeats} = readSeats()
+    const {seats, refetchSeats} = readSeatsByDate(date.toJSON().substring(0,10));
 
     DeviceEventEmitter.addListener("event.refetchSeats", () =>
         refetchSeats());
@@ -21,9 +23,10 @@ export default function HomePage() {
             <View>
                 <AddSeatButton/>
                 <ScrollView>
+                    <DatePicker updateState={setDate} date={date} />
                     <BuildingFloorPlan company={Companies.Xplore_Group} floorNumber={1}/>
                     {seats.map((seat: Seat) => (
-                        <CardSeat key={seat.id} seat={seat}/>
+                        <CardSeat date={date} key={seat.id} seat={seat}/>
                     ))}
                 </ScrollView>
             </View>
