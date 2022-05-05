@@ -14,7 +14,7 @@ export default function TimePicker({startTime, endTime, setEndTime, setStartTime
         <>
             {
                 Platform.OS === 'android' ? (
-                    <View style={{display: 'flex', flexDirection: 'row', alignSelf: 'center', alignItems: 'center'}}>
+                    <View style={{display: 'flex', flexDirection: 'row', alignSelf: 'center', alignItems: 'center', height: "auto"}}>
                         <TimePickerDropDown updateState={setStartTime} time={startTime} timeName={'Start'}/>
                         <TimePickerDropDown updateState={setEndTime} time={endTime} timeName={'End'}/>
                     </View>

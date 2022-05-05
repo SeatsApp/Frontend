@@ -35,7 +35,7 @@ test("Create api call on button press", () => {
 
   const { getByText } = render(<CreateSeat />);
 
-  fireEvent.press(getByText('Submit'));
+  fireEvent.press(getByText('Create'));
 
   expect(AxiosClient).toHaveBeenCalledWith({
     url: '/api/seat', method: 'post',

@@ -13,7 +13,7 @@ export default function TimePickerDropDown({timeName, updateState, time}: Props)
     const [showDropDown, setShowDropDown] = useState(false);
 
     return (
-        <View style={{marginHorizontal: 1}}>
+        <View style={{marginHorizontal: 1, height: 'auto'}}>
             <DropDown
                 label={timeName}
                 mode={"outlined"}

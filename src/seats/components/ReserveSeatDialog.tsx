@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Dialog, Text} from "react-native-paper";
+import {Button, Dialog, IconButton, Text} from "react-native-paper";
 import TimePicker from "../../dateTimePicker/components/TimePicker";
 import useSeat from "../../shared/hooks/useSeat";
 import {Seat} from "../types/Seat";
@@ -38,16 +38,17 @@ export default function ReserveSeatDialog({seat, visible, setDialogVisible, date
                 <View>
                     <Text>Unavailable:</Text>
                     {seat.reservations.map((res: Reservation) => (
-                        <Text style={{color: 'red'}} key={res.id}>{res.startTime.substring(11,16)} - {res.endTime.substring(11,16)}</Text>
+                        <Text style={{color: 'red'}}
+                              key={res.id}>{res.startTime.substring(11, 16)} - {res.endTime.substring(11, 16)}</Text>
                     ))}
                 </View>
-                <TimePicker setStartTime={setStartTime} setEndTime={setEndTime}
-                            startTime={startTime} endTime={endTime}/>
+                <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                    <TimePicker setStartTime={setStartTime} setEndTime={setEndTime}
+                                startTime={startTime} endTime={endTime}/>
+                    <IconButton icon={'check'} onPress={handleReserve}/>
+                    <IconButton icon={'close'} onPress={() => setDialogVisible(false)}/>
+                </View>
             </Dialog.Content>
-            <Dialog.Actions>
-                <Button onPress={handleReserve}>Reserve</Button>
-                <Button onPress={() => setDialogVisible(false)}>Cancel</Button>
-            </Dialog.Actions>
         </Dialog>
     );
 }

@@ -4,7 +4,6 @@ import { View, Text, Button, StyleSheet, DeviceEventEmitter } from 'react-native
 import { FormBuilder } from 'react-native-paper-form-builder';
 import useSeat from '../../shared/hooks/useSeat';
 
-
 export default function CreateSeat() {
     const { createSeat } = useSeat();
     const { control, setFocus, handleSubmit } = useForm({
@@ -15,7 +14,7 @@ export default function CreateSeat() {
     });
 
     return (
-        <View>
+        <View style={styles.containerStyle}>
             <Text style={styles.headingStyle}>Create Seat</Text>
             <FormBuilder
                 control={control}
@@ -30,11 +29,18 @@ export default function CreateSeat() {
                                 message: 'Name is required',
                             },
                         },
+                        textInputProps: {
+                            label: 'Seat name',
+                            placeholder: 'seat',
+                            onPressIn: '',
+                            onPressOut: '',
+                            autoComplete: 'true'
+                        }
                     },
                 ]}
             />
             <Button
-                title='Submit'
+                title='Create'
                 onPress={handleSubmit( async (data) => {
                     await createSeat(data.name);
                     DeviceEventEmitter.emit("event.refetchSeats", {});
@@ -48,10 +54,7 @@ export default function CreateSeat() {
 const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
-    },
-    scrollViewStyle: {
-        padding: 10,
-        justifyContent: 'center',
+        margin: 10
     },
     headingStyle: {
         fontSize: 30,
