@@ -3,6 +3,11 @@ import renderer from "react-test-renderer";
 import DatePicker from "../src/dateTimePicker/components/DatePicker";
 import {fireEvent, render} from "@testing-library/react-native";
 
+beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+  });
+
 test("renders the datepicker correctly", () => {
     const tree = renderer.create(<DatePicker  date={new Date()} updateState={() => null}/>).toJSON();
     expect(tree).toMatchSnapshot();

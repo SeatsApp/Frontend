@@ -9,11 +9,9 @@ import '@testing-library/jest-dom'
 import * as WebBrowser from 'expo-web-browser';
 
 beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'warn').mockImplementation(() => { });
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(console, 'error').mockImplementation(() => { });
-});
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+  });
 
 test("renders correctly", () => {
     const tree = renderer.create(<OpenURLButton url={""} />).toJSON();
