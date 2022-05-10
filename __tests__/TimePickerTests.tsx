@@ -3,6 +3,11 @@ import renderer from "react-test-renderer";
 import TimePicker from "../src/dateTimePicker/components/TimePickerDropDown";
 import {render} from "@testing-library/react-native";
 
+beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+  });
+
 test("renders the datepicker correctly", () => {
     const tree = renderer.create(<TimePicker updateState={() => true} time={""} timeName={""}/>).toJSON();
     expect(tree).toMatchSnapshot();

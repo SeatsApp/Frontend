@@ -9,10 +9,8 @@ import 'jest-localstorage-mock';
 import { act } from "@testing-library/react-native";
 
 beforeEach(() => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  jest.spyOn(console, 'warn').mockImplementation(() => { });
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  jest.spyOn(console, 'error').mockImplementation(() => { });
+  jest.spyOn(console, 'warn').mockImplementation();
+  jest.spyOn(console, 'error').mockImplementation();
 });
 
 test("renders not logged in correctly", () => {

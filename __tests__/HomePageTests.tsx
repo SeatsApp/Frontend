@@ -8,6 +8,11 @@ import AxiosClient from "../src/utils/AxiosClient";
 import { act, renderHook } from '@testing-library/react-hooks'
 import { Seat } from "../src/seats/types/Seat";
 
+beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+  });
+  
 jest.mock('@react-navigation/native');
 
 test("renders the homepage correctly", () => {
