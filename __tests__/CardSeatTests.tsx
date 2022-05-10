@@ -7,7 +7,7 @@ import AxiosClient from "../src/utils/AxiosClient";
 import {AxiosPromise} from "axios";
 import Enzyme, {shallow} from "enzyme";
 import {Button} from "react-native-paper";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 
 Enzyme.configure({adapter: new Adapter()});
 

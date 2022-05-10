@@ -1,13 +1,18 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import renderer, {act} from "react-test-renderer";
 import ReserveSeatDialog from "../src/seats/components/ReserveSeatDialog";
-import Enzyme, {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import {Button} from "react-native-paper";
+import Enzyme from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import {mocked} from "ts-jest/utils"; // a helper function from ts-jest
 import AxiosClient from "../src/utils/AxiosClient";
 import {AxiosPromise} from "axios";
 import {toast} from "@jamsch/react-native-toastify";
+import {fireEvent, render} from "@testing-library/react-native";
+
+beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+});
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -26,10 +31,12 @@ test("handleReserve succesfull test", async () => {
         .mockImplementationOnce(() => ["15:00", () => null])
         .mockImplementationOnce(() => ["16:00", () => null])
 
-    const wrapper = shallow(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+    const { getByText } = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
                                                visible={true} date={new Date(2024,11,24, 10,5,6)}/>);
 
-    wrapper.find(Button).at(0).simulate('press');
+    act(() => {
+        fireEvent.press(getByText("Reserve"));
+    });
 
     expect(AxiosClient).toHaveBeenCalledWith({
         url: '/api/seats/1/reserve', method: 'patch',
@@ -42,10 +49,12 @@ test("handleReserve succesfull test", async () => {
 test("handleReserve with failure", async () => {
     const alertMock = jest.spyOn(toast,'error').mockImplementation();
 
-    const screen = shallow(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+    const {getByText} = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
                                                visible={true} date={new Date()}/>);
 
-    screen.find(Button).at(0).simulate('press');
+    act(() => {
+        fireEvent.press(getByText("Reserve"));
+    });
 
     expect(alertMock).toHaveBeenCalledTimes(1);
 });

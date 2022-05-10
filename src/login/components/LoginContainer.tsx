@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
-import { Linking, Platform, View } from "react-native";
 import useLogin from "../hooks/useLogin";
 import { OpenURLButton } from "./OpenUrlButton"
 import * as SecureStore from 'expo-secure-store';
 import { Text } from "react-native-paper";
+import { Platform, Linking, View } from "react-native";
 
 interface LoginContainerProps {
     children: JSX.Element;
@@ -27,7 +27,7 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
 
     useEffect(() => {
         if (Platform.OS === "web") {
-            Linking.getInitialURL().then((url) => {
+            Linking.getInitialURL().then((url: string | null) => {
                 if (url !== null) {
                     let jwtToken: string = url.split("=")[1]
                     if (jwtToken !== undefined) {
@@ -44,8 +44,8 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
         }
     }, [])
 
-    const loginUrl = (Platform.OS === 'web') ? "https://86d3-94-143-189-241.eu.ngrok.io/api/login/web"
-        : "https://86d3-94-143-189-241.eu.ngrok.io/api/login/expo"
+    const loginUrl = (Platform.OS === 'web') ? "https://54a1-94-143-189-241.eu.ngrok.io/api/login/web"
+        : "https://54a1-94-143-189-241.eu.ngrok.io/api/login/expo"
     if (loggedIn) {
         return children
     }
