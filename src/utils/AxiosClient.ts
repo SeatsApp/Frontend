@@ -1,11 +1,28 @@
 import axios from "axios";
-import { Platform } from "react-native";
 import { toast } from "@jamsch/react-native-toastify";
+import { Platform } from "react-native";
+import * as SecureStore from 'expo-secure-store';
+
+axios.defaults.withCredentials = true
 
 const AxiosClient = axios.create({
-    baseURL: 'http://'
-        + (Platform.OS === 'android' ? '10.0.2.2' : 'localhost') + ':8080'
+    withCredentials: true,
+    baseURL: 'https://86d3-94-143-189-241.eu.ngrok.io'
 })
+
+AxiosClient.interceptors.request.use(async req => {
+    if (Platform.OS === "web") {
+        const jwtToken = localStorage.getItem("JwtToken")
+        if (req.headers !== undefined && jwtToken !== null) {
+            req.headers.authorization = "Bearer " + jwtToken;
+        }
+    } else {
+        const jwtToken = await SecureStore.getItemAsync('JwtToken')
+        if (req.headers !== undefined && jwtToken !== null)
+            req.headers.authorization = "Bearer " + jwtToken;
+    }
+    return req;
+});
 
 AxiosClient.interceptors.response.use(
     (response) => {

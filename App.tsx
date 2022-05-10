@@ -12,6 +12,7 @@ import {
 import "intl";
 import 'intl/locale-data/jsonp/nl'
 import {Platform} from "react-native";
+import { LoginContainer } from './src/login/components/LoginContainer';
 
 /* istanbul ignore next */
 if (Platform.OS === "android") {
@@ -33,13 +34,15 @@ export default function App() {
 
     return (
         <Provider>
-            <NavigationContainer>
-                <ToastContainer/>
-                <Stack.Navigator initialRouteName='Home'>
-                    <Stack.Screen name='Home' component={HomePage}/>
-                    <Stack.Screen name='CreateSeat' component={CreateSeat}/>
-                </Stack.Navigator>
-            </NavigationContainer>
+            <LoginContainer>
+                <NavigationContainer>
+                    <ToastContainer />
+                    <Stack.Navigator initialRouteName='Home'>
+                        <Stack.Screen name='Home' component={HomePage} />
+                        <Stack.Screen name='CreateSeat' component={CreateSeat} />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </LoginContainer>
         </Provider>
     );
 }

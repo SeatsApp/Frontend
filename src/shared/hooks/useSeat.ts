@@ -31,7 +31,7 @@ export default function useSeat() {
     })
   }
 
-  function getSeats() {
+  function readSeats() {
     const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seats`, []);
     return {
       seats,
@@ -49,7 +49,7 @@ export default function useSeat() {
 
   return {
     createSeat,
-    readSeats: getSeats,
+    readSeats,
     readSeatsByDate: getSeatsAndReservationsByDate,
     deleteSeat,
     reserveSeat

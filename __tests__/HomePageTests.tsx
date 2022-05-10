@@ -16,7 +16,7 @@ test("renders the homepage correctly", () => {
 });
 
 jest.mock("../src/utils/AxiosClient");
-const { readSeats } = useSeat()
+const { readSeats } = useSeat();
 
 test("should call get api to retrieve seats", async () => {
     // Arrange
