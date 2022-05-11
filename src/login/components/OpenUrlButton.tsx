@@ -16,7 +16,7 @@ export const OpenURLButton = ({ url }: OpenUrlButtonProps) => {
       if (Platform.OS === "web") {
         await Linking.openURL(url)
       } else {
-        WebBrowser.openBrowserAsync(url)
+        await WebBrowser.openBrowserAsync(url)
       }
     } else {
       toast.error(`Do not know how to open this URL: ${url}`);

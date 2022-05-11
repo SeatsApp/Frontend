@@ -29,11 +29,13 @@ test("should call get api to retrieve seats", async () => {
         data: [
             {
                 id: 1,
-                name: '1A'
+                name: '1A',
+                reservations: []
             },
             {
                 id: 2,
-                name: '2B'
+                name: '2B',
+                reservations: []
             }
         ],
     }

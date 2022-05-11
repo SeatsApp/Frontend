@@ -40,7 +40,7 @@ export default function useSeat() {
   }
 
   function getSeatsAndReservationsByDate(date: string) {
-    const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seatsReservationsFromDate?date=` + date, []);
+    const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seats/reservations/date/` + date, []);
     return {
       seats,
       refetchSeats,
