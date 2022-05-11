@@ -19,7 +19,7 @@ Enzyme.configure({adapter: new Adapter()});
 jest.mock("../src/utils/AxiosClient");
 
 test("renders correctly", () => {
-    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00"}]}} setDialogVisible={() => true}
+    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00", date:"2022-04-22", checkedIn: false}]}} setDialogVisible={() => true}
                                                     visible={true} date={new Date()}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
@@ -31,11 +31,11 @@ test("handleReserve succesfull test", async () => {
         .mockImplementationOnce(() => ["15:00", () => null])
         .mockImplementationOnce(() => ["16:00", () => null])
 
-    const { getByText } = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+    const { getByTestId } = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
                                                visible={true} date={new Date(2024,11,24, 10,5,6)}/>);
 
     act(() => {
-        fireEvent.press(getByText("Reserve"));
+        fireEvent.press(getByTestId("ReserveButton"));
     });
 
     expect(AxiosClient).toHaveBeenCalledWith({
@@ -49,13 +49,27 @@ test("handleReserve succesfull test", async () => {
 test("handleReserve with failure", async () => {
     const alertMock = jest.spyOn(toast,'error').mockImplementation();
 
-    const {getByText} = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
+    const {getByTestId} = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={() => true}
                                                visible={true} date={new Date()}/>);
 
     act(() => {
-        fireEvent.press(getByText("Reserve"));
+        fireEvent.press(getByTestId("ReserveButton"));
     });
 
     expect(alertMock).toHaveBeenCalledTimes(1);
+});
+
+test("cancel dialog on button click", async () => {
+    const mockSetState = jest.fn();
+
+    const {getByTestId} = render(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: []}} setDialogVisible={mockSetState}
+                                               visible={true} date={new Date()}/>);
+
+    act(() => {
+        fireEvent.press(getByTestId("CancelButton"));
+    });
+
+    expect(mockSetState).toHaveBeenCalledTimes(1);
+    expect(mockSetState).toHaveBeenCalledWith(false);
 });
 

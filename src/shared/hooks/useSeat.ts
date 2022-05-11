@@ -47,11 +47,21 @@ export default function useSeat() {
     };
   }
 
+  async function checkInSeat(seatId:number) {
+    return axiosClient({
+      url: '/api/seats/' + seatId + '/checkIn', method: 'patch',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+
   return {
     createSeat,
     readSeats,
     readSeatsByDate: getSeatsAndReservationsByDate,
     deleteSeat,
-    reserveSeat
+    reserveSeat,
+    checkInSeat
   };
 }

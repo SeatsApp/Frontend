@@ -1,5 +1,5 @@
 import React from 'react'
-import AddSeatButton from './AddSeatButton'
+import ActionMenu from './ActionMenu'
 import CardSeat from './CardSeat';
 import {Seat} from '../types/Seat';
 import useSeat from '../../shared/hooks/useSeat';
@@ -21,7 +21,7 @@ export default function HomePage() {
     return (
         <Provider>
             <View>
-                <AddSeatButton/>
+                <ActionMenu/>
                 <ScrollView>
                     <DatePicker updateState={setDate} date={date} />
                     <BuildingFloorPlan company={Companies.Xplore_Group} floorNumber={1}/>

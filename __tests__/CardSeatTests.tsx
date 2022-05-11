@@ -18,7 +18,7 @@ test("renders the cardseat correctly", () => {
 });
 
 test("renders the cardseat correctly with reservation", () => {
-    const tree = renderer.create(<CardSeat seat={{id: 1, name: "1A", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00"}]}} date={new Date()}/>).toJSON();
+    const tree = renderer.create(<CardSeat seat={{id: 1, name: "test", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00", date:"2022-04-22", checkedIn: false}]}} date={new Date()}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
