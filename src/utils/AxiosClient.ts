@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "@jamsch/react-native-toastify";
 import { Platform } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 
@@ -7,7 +6,7 @@ axios.defaults.withCredentials = true
 
 const AxiosClient = axios.create({
     withCredentials: true,
-    baseURL: 'https://54a1-94-143-189-241.eu.ngrok.io'
+    baseURL: 'https://5b27-94-143-189-241.eu.ngrok.io'
 })
 
 AxiosClient.interceptors.request.use(async req => {
@@ -23,14 +22,5 @@ AxiosClient.interceptors.request.use(async req => {
     }
     return req;
 });
-
-AxiosClient.interceptors.response.use(
-    (response) => {
-        if (response.config.method != "get")
-            toast.success(response.data)
-        return response
-    },
-    (error) => toast.error(error.response.data)
-);
 
 export default AxiosClient;
