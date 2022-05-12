@@ -13,6 +13,7 @@ import "intl";
 import 'intl/locale-data/jsonp/nl'
 import {Platform} from "react-native";
 import { LoginContainer } from './src/login/components/LoginContainer';
+import CheckIn from './src/seats/components/CheckIn';
 
 /* istanbul ignore next */
 if (Platform.OS === "android") {
@@ -27,6 +28,7 @@ registerTranslation('nl',nl);
 export type RootStackParamList = {
     Home: undefined;
     CreateSeat: undefined;
+    CheckIn: undefined;
 }
 
 export default function App() {
@@ -40,6 +42,7 @@ export default function App() {
                     <Stack.Navigator initialRouteName='Home'>
                         <Stack.Screen name='Home' component={HomePage} />
                         <Stack.Screen name='CreateSeat' component={CreateSeat} />
+                        <Stack.Screen name='CheckIn' component={CheckIn} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </LoginContainer>

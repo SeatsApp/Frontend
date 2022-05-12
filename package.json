@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "@jamsch/react-native-toastify": "^0.1.2",
-    "@mdi/font": "^6.6.96",
-    "@mdi/js": "^6.6.96",
     "@react-native-cookies/cookies": "^6.2.0",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
@@ -26,6 +24,7 @@
     "axios-mock-adapter": "^1.20.0",
     "enzyme": "^3.11.0",
     "expo": "^44.0.0",
+    "expo-barcode-scanner": "^11.3.0",
     "expo-cli": "^5.4.3",
     "expo-linking": "~3.0.0",
     "expo-modules-core": "^0.6.5",
