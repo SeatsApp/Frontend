@@ -1,12 +1,13 @@
 import axios from "axios";
 import { Platform } from "react-native";
 import * as SecureStore from 'expo-secure-store';
+import {backendUrl} from "../config/EnvironmentVariableConfig"
 
 axios.defaults.withCredentials = true
 
 const AxiosClient = axios.create({
     withCredentials: true,
-    baseURL: 'https://5040-94-143-189-241.eu.ngrok.io'
+    baseURL: backendUrl
 })
 
 AxiosClient.interceptors.request.use(async req => {
