@@ -4,6 +4,7 @@ import { OpenURLButton } from "./OpenUrlButton"
 import * as SecureStore from 'expo-secure-store';
 import { Text } from "react-native-paper";
 import { Platform, Linking, View } from "react-native";
+import { backendUrl } from '../../config/EnvironmentVariableConfig'
 
 interface LoginContainerProps {
     children: JSX.Element;
@@ -44,8 +45,8 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
         }
     }, [])
 
-    const loginUrl = (Platform.OS === 'web') ? "https://5b27-94-143-189-241.eu.ngrok.io/api/login/web"
-        : "https://5b27-94-143-189-241.eu.ngrok.io/api/login/expo"
+    const loginUrl = (Platform.OS === 'web') ? backendUrl + "/api/login/web"
+        : backendUrl + "/api/login/expo"
     if (loggedIn) {
         return children
     }
