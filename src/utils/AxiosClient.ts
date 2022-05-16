@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true
 
 const AxiosClient = axios.create({
     withCredentials: true,
-    baseURL: 'https://5b27-94-143-189-241.eu.ngrok.io'
+    baseURL: 'https://5040-94-143-189-241.eu.ngrok.io'
 })
 
 AxiosClient.interceptors.request.use(async req => {
