@@ -19,7 +19,7 @@ Enzyme.configure({adapter: new Adapter()});
 jest.mock("../src/utils/AxiosClient");
 
 test("renders correctly", () => {
-    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: [{id: 1, startTime: "2022-04-22 15:00:00", endTime: "2022-04-22 16:00:00", date:"2022-04-22", checkedIn: false}]}} setDialogVisible={() => true}
+    const tree = renderer.create(<ReserveSeatDialog seat={{id: 1, name: "test", reservations: [{id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false}]}} setDialogVisible={() => true}
                                                     visible={true} date={new Date()}/>).toJSON();
     expect(tree).toMatchSnapshot();
 });
