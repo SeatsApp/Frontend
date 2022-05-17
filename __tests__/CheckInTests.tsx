@@ -6,6 +6,9 @@ import {mocked} from "ts-jest/utils";
 import AxiosClient from "../src/utils/AxiosClient";
 import {AxiosPromise} from "axios";
 import useSeat from "../src/shared/hooks/useSeat";
+import { BarCodeScanner, PermissionResponse } from "expo-barcode-scanner";
+
+jest.spyOn(BarCodeScanner, 'requestPermissionsAsync').mockImplementation(() => Promise.resolve({status : 'granted'} as PermissionResponse));
 
 test("renders correctly", () => {
     const tree = renderer.create(<CheckIn />).toJSON();
