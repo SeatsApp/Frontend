@@ -37,8 +37,8 @@ export default function ReserveSeatDialog({seat, visible, setDialogVisible, date
             <Dialog.Content>
                 <View>
                     <Text>Unavailable:</Text>
-                    {seat.reservations.map((res: Reservation) => (
-                        <Text style={{color: 'red'}} key={res.id}>{res.startDateTime.substring(11,16)} - {res.endDateTime.substring(11,16)}</Text>
+                    {seat.reservations.map((res: Reservation, index) => (
+                        <Text style={{color: 'red'}} key={index}>{res.startDateTime.substring(10,15)} - {res.endDateTime.substring(10,15)}</Text>
                     ))}
                 </View>
                 <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>

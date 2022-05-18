@@ -1,9 +1,14 @@
 import React from 'react'
 import { Dimensions, View, Platform } from 'react-native'
 import Svg, { G, Polyline } from 'react-native-svg'
+import { Seat } from '../../../seats/types/Seat';
 import OfficeIsland from '../../components/OfficeIsland'
 
-export default function XploreGroupFloor1() {
+interface XploreGroupFloor1Props {
+    seats: Seat[];
+}
+
+export default function XploreGroupFloor1({ seats }: XploreGroupFloor1Props) {
     const originalWidth = 1600;
     const originalHeight = 2100;
 
@@ -25,30 +30,41 @@ export default function XploreGroupFloor1() {
                         strokeWidth="15"
                     />
                     <G>
-                        <OfficeIsland islandId='A' rows={2} columns={2} startX={100} startY={5} heightBureau={200} widthBureau={100} />
-                        <OfficeIsland islandId='B' rows={2} columns={2} startX={500} startY={5} heightBureau={200} widthBureau={100} />
-                        <OfficeIsland islandId='C' rows={2} columns={2} startX={900} startY={5} heightBureau={200} widthBureau={100} />
-                        <OfficeIsland islandId='D' rows={2} columns={2} startX={1300} startY={5} heightBureau={200} widthBureau={100} />
+                        <OfficeIsland islandId='A' rows={2} columns={2} startX={100} 
+                        startY={5} heightBureau={200} widthBureau={100} seats={seats} />
+                        <OfficeIsland islandId='B' rows={2} columns={2} startX={500} 
+                        startY={5} heightBureau={200} widthBureau={100} seats={seats} />
+                        <OfficeIsland islandId='C' rows={2} columns={2} startX={900} 
+                        startY={5} heightBureau={200} widthBureau={100} seats={seats} />
+                        <OfficeIsland islandId='D' rows={2} columns={2} startX={1300} 
+                        startY={5} heightBureau={200} widthBureau={100} seats={seats} />
                     </G>
 
 
                     <G>
-                        <OfficeIsland islandId='E' rows={3} columns={2} startX={5} startY={605} heightBureau={100} widthBureau={200} />
-                        <OfficeIsland islandId='F' rows={3} columns={2} startX={995} startY={605} heightBureau={100} widthBureau={200} />
+                        <OfficeIsland islandId='E' rows={3} columns={2} startX={5} 
+                        startY={605} heightBureau={100} widthBureau={200} seats={seats} />
+                        <OfficeIsland islandId='F' rows={3} columns={2} startX={995} 
+                        startY={605} heightBureau={100} widthBureau={200} seats={seats} />
                     </G>
 
                     <G>
-                        <OfficeIsland islandId='G' rows={3} columns={2} startX={5} startY={1005} heightBureau={100} widthBureau={200} />
-                        <OfficeIsland islandId='H' rows={3} columns={2} startX={995} startY={1005} heightBureau={100} widthBureau={200} />
+                        <OfficeIsland islandId='G' rows={3} columns={2} startX={5} 
+                        startY={1005} heightBureau={100} widthBureau={200} seats={seats} />
+                        <OfficeIsland islandId='H' rows={3} columns={2} startX={995} 
+                        startY={1005} heightBureau={100} widthBureau={200} seats={seats} />
                     </G>
 
                     <G>
-                        <OfficeIsland islandId='I' rows={3} columns={2} startX={5} startY={1405} heightBureau={100} widthBureau={200} />
-                        <OfficeIsland islandId='J' rows={3} columns={2} startX={995} startY={1405} heightBureau={100} widthBureau={200} />
+                        <OfficeIsland islandId='I' rows={3} columns={2} startX={5} 
+                        startY={1405} heightBureau={100} widthBureau={200} seats={seats} />
+                        <OfficeIsland islandId='J' rows={3} columns={2} startX={995} 
+                        startY={1405} heightBureau={100} widthBureau={200} seats={seats} />
                     </G>
 
                     <G>
-                        <OfficeIsland islandId='K' rows={3} columns={2} startX={5} startY={1805} heightBureau={100} widthBureau={200} />
+                        <OfficeIsland islandId='K' rows={3} columns={2} startX={5} 
+                        startY={1805} heightBureau={100} widthBureau={200} seats={seats} />
                     </G>
                 </G>
             </Svg>

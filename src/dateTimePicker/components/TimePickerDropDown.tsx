@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {View} from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import DropDown from "react-native-paper-dropdown";
-import {getTimeslots} from "../../seats/types/Timeslots";
+import { getTimeslots } from "../../seats/types/Timeslots";
 
 interface Props {
     timeName: string,
@@ -9,11 +9,11 @@ interface Props {
     time: string
 }
 
-export default function TimePickerDropDown({timeName, updateState, time}: Props) {
+export default function TimePickerDropDown({ timeName, updateState, time }: Props) {
     const [showDropDown, setShowDropDown] = useState(false);
 
     return (
-        <View style={{marginHorizontal: 1}}>
+        <View style={{ marginHorizontal: 1 }}>
             <DropDown
                 label={timeName}
                 mode={"outlined"}
@@ -23,7 +23,8 @@ export default function TimePickerDropDown({timeName, updateState, time}: Props)
                 value={time}
                 setValue={updateState}
                 list={getTimeslots()}
+                dropDownStyle={{ marginTop: 0 }}
             />
-            </View>
+        </View>
     )
 }

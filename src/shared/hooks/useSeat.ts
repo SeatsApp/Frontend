@@ -37,7 +37,7 @@ export default function useSeat() {
   async function reserveSeat(seatId: number, startTime: string, endTime: string) {
     return axiosClient({
       url: '/api/seats/' + seatId + '/reserve', method: 'patch',
-      data: JSON.stringify({ startTime: startTime, endTime: endTime }),
+      data: JSON.stringify({ startDateTime: startTime, endDateTime: endTime }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -57,7 +57,7 @@ export default function useSeat() {
     };
   }
 
-  function getSeatsAndReservationsByDate(date: string) {
+  function readSeatsByDate(date: string) {
     const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seats/reservations/date/` + date, []);
     return {
       seats,
@@ -77,7 +77,7 @@ export default function useSeat() {
   return {
     createSeat,
     readSeats,
-    readSeatsByDate: getSeatsAndReservationsByDate,
+    readSeatsByDate,
     deleteSeat,
     reserveSeat,
     checkInSeat
