@@ -1,7 +1,9 @@
-import {Reservation} from "./Reservation";
+import { Reservation } from "./Reservation";
+import { SeatStatus } from "./SeatStatus";
 
 export type Seat = {
     id: number,
-    name: string
+    name: string,
+    seatStatus: SeatStatus,
     reservations: Reservation[]
 };

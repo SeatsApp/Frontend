@@ -7,6 +7,7 @@ import useSeat from "../src/shared/hooks/useSeat";
 import AxiosClient from "../src/utils/AxiosClient";
 import { act, renderHook } from '@testing-library/react-hooks'
 import { Seat } from "../src/seats/types/Seat";
+import { SeatStatus } from "../src/seats/types/SeatStatus";
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();
@@ -30,11 +31,13 @@ test("should call get api to retrieve seats", async () => {
             {
                 id: 1,
                 name: '1A',
+                seatStatus: SeatStatus.AVAILABLE,
                 reservations: []
             },
             {
                 id: 2,
                 name: '2B',
+                seatStatus: SeatStatus.AVAILABLE,
                 reservations: []
             }
         ],
@@ -60,11 +63,13 @@ test("should call get api to refetch seats", async () => {
             {
                 id: 1,
                 name: '1A',
+                seatStatus: SeatStatus.PARTIALLY_BOOKED,
                 reservations: []
             },
             {
                 id: 2,
                 name: '2B',
+                seatStatus: SeatStatus.FULLY_BOOKED,
                 reservations: []
             }
         ],
