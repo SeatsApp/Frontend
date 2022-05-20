@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import TimePicker from "../src/dateTimePicker/components/TimePicker";
+import TimePicker from "../../src/dateTimePicker/components/TimePicker";
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();

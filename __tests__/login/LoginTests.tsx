@@ -1,9 +1,9 @@
 import React from "react";
-import { LoginContainer } from "../src/login/components/LoginContainer";
+import { LoginContainer } from "../../src/login/components/LoginContainer";
 import renderer from "react-test-renderer";
 import { Linking, Platform, Text } from "react-native";
-import useLogin from "../src/login/hooks/useLogin";
-import AxiosClient from "../src/utils/AxiosClient";
+import useLogin from "../../src/login/hooks/useLogin";
+import AxiosClient from "../../src/utils/AxiosClient";
 import { render as renderDom } from "react-dom";
 import 'jest-localstorage-mock';
 import { act } from "@testing-library/react-native";
@@ -31,7 +31,7 @@ test("renders logged in correctly", () => {
   expect(tree).toMatchSnapshot();
 });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 
 test("should call api with correct parameters", async () => {
   const setState = jest.fn();

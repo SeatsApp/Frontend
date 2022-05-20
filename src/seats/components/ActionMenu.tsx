@@ -26,6 +26,11 @@ export default function ActionMenu() {
                         label: 'Check in',
                         onPress: () => navigation.navigate("CheckIn"),
                     },
+                    {
+                        icon: 'calendar-account',
+                        label: 'My reservations',
+                        onPress: () => navigation.navigate("MyReservations"),
+                    },
                 ]}
                 onStateChange={() => setOpen(!open)}
             />

@@ -1,14 +1,14 @@
-import CardSeat from "../src/seats/components/CardSeat";
+import CardSeat from "../../src/seats/components/CardSeat";
 import React from "react";
 import renderer from "react-test-renderer";
-import useSeat from "../src/shared/hooks/useSeat";
+import useSeat from "../../src/shared/hooks/useSeat";
 import { mocked } from "ts-jest/utils";
-import AxiosClient from "../src/utils/AxiosClient";
+import AxiosClient from "../../src/utils/AxiosClient";
 import { AxiosPromise } from "axios";
 import Enzyme, { shallow } from "enzyme";
 import { Button } from "react-native-paper";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { SeatStatus } from "../src/seats/types/SeatStatus";
+import { SeatStatus } from "../../src/seats/types/SeatStatus";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -30,7 +30,7 @@ test("renders the cardseat correctly with reservation", () => {
     expect(tree).toMatchSnapshot();
 });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 const { deleteSeat, reserveSeat } = useSeat();
 const startTime = "2022-02-22 14:00:00";
 const endtime = "2022-02-22 15:00:00";

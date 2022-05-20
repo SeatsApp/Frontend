@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import DatePicker from "../src/dateTimePicker/components/DatePicker";
+import DatePicker from "../../src/dateTimePicker/components/DatePicker";
 import {fireEvent, render} from "@testing-library/react-native";
 
 beforeEach(() => {

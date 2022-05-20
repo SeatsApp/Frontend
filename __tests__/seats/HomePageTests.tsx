@@ -2,12 +2,12 @@ import { AxiosPromise } from "axios";
 import React from "react";
 import renderer from "react-test-renderer";
 import { mocked } from "ts-jest/utils";
-import HomePage from "../src/seats/components/HomePage";
-import useSeat from "../src/shared/hooks/useSeat";
-import AxiosClient from "../src/utils/AxiosClient";
+import HomePage from "../../src/seats/components/HomePage";
+import useSeat from "../../src/shared/hooks/useSeat";
+import AxiosClient from "../../src/utils/AxiosClient";
 import { act, renderHook } from '@testing-library/react-hooks'
-import { Seat } from "../src/seats/types/Seat";
-import { SeatStatus } from "../src/seats/types/SeatStatus";
+import { Seat } from "../../src/seats/types/Seat";
+import { SeatStatus } from "../../src/seats/types/SeatStatus";
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();
@@ -21,7 +21,7 @@ test("renders the homepage correctly", () => {
     expect(tree).toMatchSnapshot();
 });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 const { readSeats } = useSeat();
 
 test("should call get api to retrieve seats", async () => {

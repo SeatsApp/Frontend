@@ -4,7 +4,7 @@ import React from "react";
 import { Linking, Platform } from "react-native";
 import { Provider } from "react-native-paper";
 import renderer, { act } from "react-test-renderer";
-import { OpenURLButton } from "../src/login/components/OpenUrlButton";
+import { OpenURLButton } from "../../src/login/components/OpenUrlButton";
 import '@testing-library/jest-dom'
 import * as WebBrowser from 'expo-web-browser';
 

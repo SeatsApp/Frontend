@@ -65,7 +65,7 @@ export default function useSeat() {
     };
   }
 
-  async function checkInSeat(seatId:number) {
+  async function checkInSeat(seatId: number) {
     return axiosClient({
       url: '/api/seats/' + seatId + '/checkIn', method: 'patch',
       headers: {

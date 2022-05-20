@@ -2,10 +2,10 @@ import React from 'react'
 import { Card, Button, Title, Paragraph, Portal, Text } from 'react-native-paper';
 import { Seat } from '../types/Seat'
 import useSeat from "../../shared/hooks/useSeat";
-import { DeviceEventEmitter, View } from "react-native";
 import ReserveSeatDialog from "./ReserveSeatDialog";
 import useStatusColor from '../hooks/UseStatusColor';
 import { SeatStatus } from '../types/SeatStatus';
+import { DeviceEventEmitter, View } from "react-native";
 
 interface CardSeatProps {
     seat: Seat,
