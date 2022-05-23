@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import TimePicker from "../src/dateTimePicker/components/TimePickerDropDown";
+import TimePicker from "../../src/dateTimePicker/components/TimePickerDropDown";
 import {render} from "@testing-library/react-native";
 
 beforeEach(() => {

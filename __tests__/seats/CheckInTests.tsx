@@ -1,11 +1,11 @@
 import React from "react";
 import renderer, {act} from "react-test-renderer";
-import CheckIn from "../src/seats/components/CheckIn";
+import CheckIn from "../../src/seats/components/CheckIn";
 import {fireEvent, render, waitFor} from "@testing-library/react-native";
 import {mocked} from "ts-jest/utils";
-import AxiosClient from "../src/utils/AxiosClient";
+import AxiosClient from "../../src/utils/AxiosClient";
 import {AxiosPromise} from "axios";
-import useSeat from "../src/shared/hooks/useSeat";
+import useSeat from "../../src/shared/hooks/useSeat";
 import { BarCodeScanner, PermissionResponse } from "expo-barcode-scanner";
 
 jest.spyOn(BarCodeScanner, 'requestPermissionsAsync').mockImplementation(() => Promise.resolve({status : 'granted'} as PermissionResponse));
@@ -77,7 +77,7 @@ test("right change usestate when button click", () => {
     expect(mockSetUseState).toHaveBeenCalledTimes(1);
 });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 const { checkInSeat } = useSeat();
 
 test("should call api with correct parameters", async () => {

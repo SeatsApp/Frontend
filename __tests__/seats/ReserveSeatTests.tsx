@@ -1,14 +1,14 @@
 import React from "react";
 import renderer, { act } from "react-test-renderer";
-import ReserveSeatDialog from "../src/seats/components/ReserveSeatDialog";
+import ReserveSeatDialog from "../../src/seats/components/ReserveSeatDialog";
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { mocked } from "ts-jest/utils"; // a helper function from ts-jest
-import AxiosClient from "../src/utils/AxiosClient";
+import AxiosClient from "../../src/utils/AxiosClient";
 import { AxiosPromise } from "axios";
 import { toast } from "@jamsch/react-native-toastify";
 import { fireEvent, render } from "@testing-library/react-native";
-import { SeatStatus } from "../src/seats/types/SeatStatus";
+import { SeatStatus } from "../../src/seats/types/SeatStatus";
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();
@@ -17,7 +17,7 @@ beforeEach(() => {
 
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 
 test("renders correctly", () => {
     const tree = renderer.create(<ReserveSeatDialog seat={{

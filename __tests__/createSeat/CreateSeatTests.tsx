@@ -1,10 +1,10 @@
 import React from "react";
-import AxiosClient from "../src/utils/AxiosClient";
+import AxiosClient from "../../src/utils/AxiosClient";
 import { AxiosPromise } from 'axios'
 import renderer from "react-test-renderer";
 import { mocked } from "ts-jest/utils"; // a helper function from ts-jest
-import useSeat from "../src/shared/hooks/useSeat";
-import CreateSeat from "../src/createSeats/components/CreateSeat"
+import useSeat from "../../src/shared/hooks/useSeat";
+import CreateSeat from "../../src/createSeats/components/CreateSeat"
 import { fireEvent, render } from "@testing-library/react-native";
 
 beforeEach(() => {
@@ -17,7 +17,7 @@ test("renders correctly", () => {
   expect(tree).toMatchSnapshot();
 });
 
-jest.mock("../src/utils/AxiosClient");
+jest.mock("../../src/utils/AxiosClient");
 const { createSeat } = useSeat();
 
 test("should call api with correct parameters", async () => {

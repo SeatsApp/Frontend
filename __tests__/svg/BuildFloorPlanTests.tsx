@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { SeatStatus } from "../src/seats/types/SeatStatus";
-import BuildingFloorPlan from "../src/svg/buildings/BuildingFloorPlan";
-import { Companies } from "../src/svg/buildings/Companies";
+import { SeatStatus } from "../../src/seats/types/SeatStatus";
+import BuildingFloorPlan from "../../src/svg/buildings/BuildingFloorPlan";
+import { Companies } from "../../src/svg/buildings/Companies";
 
 jest.mock('@react-navigation/native');
 
