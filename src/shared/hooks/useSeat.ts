@@ -71,7 +71,8 @@ export default function useSeat() {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
+    }).then(() => toast.success("Successfully checked in."))
+        .catch(() => toast.error("Could not check in on this seat."))
   }
 
   return {
