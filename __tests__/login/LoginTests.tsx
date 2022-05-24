@@ -7,13 +7,18 @@ import AxiosClient from "../../src/utils/AxiosClient";
 import { render as renderDom } from "react-dom";
 import 'jest-localstorage-mock';
 import { act } from "@testing-library/react-native";
+import {mocked} from "ts-jest/utils";
+import {AxiosPromise} from "axios";
 
 beforeEach(() => {
   jest.spyOn(console, 'warn').mockImplementation();
   jest.spyOn(console, 'error').mockImplementation();
 });
 
+jest.mock("../../src/utils/AxiosClient");
+
 test("renders not logged in correctly", () => {
+  mocked(AxiosClient.get).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
   const tree = renderer.create(<LoginContainer>
     <Text>Test</Text>
   </LoginContainer>).toJSON();
@@ -21,6 +26,8 @@ test("renders not logged in correctly", () => {
 });
 
 test("renders logged in correctly", () => {
+  mocked(AxiosClient.get).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
+
   const setState = jest.fn();
   const useStateSpy = jest.spyOn(React, 'useState');
   useStateSpy.mockImplementation(() => [true, setState])
@@ -30,8 +37,6 @@ test("renders logged in correctly", () => {
   </LoginContainer>).toJSON();
   expect(tree).toMatchSnapshot();
 });
-
-jest.mock("../../src/utils/AxiosClient");
 
 test("should call api with correct parameters", async () => {
   const setState = jest.fn();
