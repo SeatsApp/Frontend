@@ -25,7 +25,7 @@ test("Test unsupported button press", async () => {
     linkingSpy.mockImplementation(() => Promise.resolve(false));
 
     act(() => {
-        fireEvent.press(screen.getByText("Login"));
+        fireEvent.press(screen.getByText("Connect with Cronos"));
     });
 
     waitFor(() =>{
@@ -47,7 +47,7 @@ test("Test web button press", async () => {
 
     Linking.openURL = jest.fn()
 
-    fireEvent.press(screen.getByText("Login"));
+    fireEvent.press(screen.getByText("Connect with Cronos"));
 
     await waitFor(() => {
         expect(Linking.openURL).toBeCalled();
@@ -64,7 +64,7 @@ test("Test Android button press", async () => {
 
     const webBrowserSpy = jest.spyOn(WebBrowser, 'openBrowserAsync');
 
-    fireEvent.press(screen.getByText("Login"));
+    fireEvent.press(screen.getByText("Connect with Cronos"));
 
     await waitFor(() => {
         expect(webBrowserSpy).toBeCalled();
