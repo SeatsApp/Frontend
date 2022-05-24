@@ -31,37 +31,9 @@ test("renders the cardseat correctly with reservation", () => {
 });
 
 jest.mock("../../src/utils/AxiosClient");
-const { deleteSeat, reserveSeat } = useSeat();
+const { reserveSeat } = useSeat();
 const startTime = "2022-02-22 14:00:00";
 const endtime = "2022-02-22 15:00:00";
-
-
-test("Delete should call api with correct parameters", async () => {
-    // mock to resolve a Promise<void>
-    mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
-
-    await deleteSeat(1);
-
-    expect(AxiosClient).toHaveBeenCalledWith({
-        url: '/api/seats/' + 1, method: 'delete'
-    });
-});
-
-test("Delete api call on button press", () => {
-    // mock to resolve a Promise<void>
-    mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
-
-    const wrapper = shallow(<CardSeat seat={{
-        id: 1, name: "1A",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
-    }} date={new Date()} />);
-
-    wrapper.find(Button).at(1).simulate('press');
-
-    expect(AxiosClient).toHaveBeenCalledWith({
-        url: '/api/seats/' + 1, method: 'delete'
-    });
-});
 
 test("Reserve should call api with correct parameters", async () => {
     // mock to resolve a Promise<void>

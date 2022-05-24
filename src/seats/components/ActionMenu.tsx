@@ -17,11 +17,6 @@ export default function ActionMenu() {
                 icon={!open ? 'desk' : 'window-close'}
                 actions={[
                     {
-                        icon: 'plus',
-                        label: 'Create seat',
-                        onPress: () => navigation.navigate("CreateSeat"),
-                    },
-                    {
                         icon: 'calendar-check',
                         label: 'Check in',
                         onPress: () => navigation.navigate("CheckIn"),

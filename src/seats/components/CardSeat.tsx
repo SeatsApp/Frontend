@@ -1,11 +1,10 @@
 import React from 'react'
 import { Card, Button, Title, Paragraph, Portal, Text } from 'react-native-paper';
 import { Seat } from '../types/Seat'
-import useSeat from "../../shared/hooks/useSeat";
 import ReserveSeatDialog from "./ReserveSeatDialog";
 import useStatusColor from '../hooks/UseStatusColor';
 import { SeatStatus } from '../types/SeatStatus';
-import { DeviceEventEmitter, View } from "react-native";
+import { View } from "react-native";
 
 interface CardSeatProps {
     seat: Seat,
@@ -13,7 +12,6 @@ interface CardSeatProps {
 }
 
 export default function CardSeat({ seat, date }: CardSeatProps) {
-    const { deleteSeat } = useSeat();
     const [dialogVisible, setDialogVisible] = React.useState(false);
 
     return (
@@ -35,10 +33,6 @@ export default function CardSeat({ seat, date }: CardSeatProps) {
                     <Button onPress={async () => {
                         setDialogVisible(true);
                     }}>Reserve</Button>
-                    <Button onPress={async () => {
-                        await deleteSeat(seat.id);
-                        DeviceEventEmitter.emit("event.refetchSeats", {});
-                    }}>Delete</Button>
                 </Card.Actions>
             </Card>
         </View>
