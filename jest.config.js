@@ -29,7 +29,7 @@ module.exports = {
     "tsx"
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!@react-native|react-native|expo-secure-store|expo-modules-core|@react-navigation|expo-web-browser|expo-barcode-scanner)'
+    'node_modules/(?!@react-native|react-native|expo-secure-store|expo-modules-core|@react-navigation|expo-web-browser|expo-barcode-scanner|expo-notifications|expo-application|expo-constants|react-test-renderer|@testing-library|jest-worker)'
   ],
   coverageReporters: [
     "json-summary",

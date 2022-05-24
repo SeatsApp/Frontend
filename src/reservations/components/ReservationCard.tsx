@@ -4,6 +4,7 @@ import useCancelReservation from '../hooks/useCancelReservation'
 import { UserReservation } from '../type/UserReservation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { DeviceEventEmitter, View } from "react-native";
+import usePushNotifications from "../../pushNotifications/hooks/usePushNotifications";
 
 interface ReservationCardProps {
     userReservation: UserReservation
@@ -11,6 +12,7 @@ interface ReservationCardProps {
 }
 
 export default function ReservationCard({ userReservation, refetchMyReservations }: ReservationCardProps) {
+    const { cancelReservationNotification } = usePushNotifications()
     const startTime = (userReservation.startDateTime.charAt(12) == ":") ?
         userReservation.startDateTime.substring(10, 15) :
         userReservation.startDateTime.substring(10, 14)
@@ -41,9 +43,10 @@ export default function ReservationCard({ userReservation, refetchMyReservations
                 <Card.Actions>
                     <Button onPress={async () => {
                         await useCancelReservation(userReservation.id);
+                        cancelReservationNotification(userReservation.id)
                         refetchMyReservations();
                         DeviceEventEmitter.emit("event.refetchSeats", {});
-                    }}>Cancel</Button>
+                    }} testID={"CancelReservation"} >Cancel</Button>
                 </Card.Actions>
             </Card>
         </View>

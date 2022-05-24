@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HomePage from './src/seats/components/HomePage';
 import { Provider } from 'react-native-paper'
 import { ToastContainer } from '@jamsch/react-native-toastify';
@@ -23,8 +23,6 @@ if (Platform.OS === "android") {
     }
 }
 
-registerTranslation('nl', nl);
-
 export type RootStackParamList = {
     Home: undefined;
     CheckIn: undefined;
@@ -33,6 +31,11 @@ export type RootStackParamList = {
 
 export default function App() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
+
+
+    useEffect(() => {
+        registerTranslation('nl', nl);
+    }, [])
 
     return (
         <Provider>

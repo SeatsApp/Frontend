@@ -16,12 +16,12 @@ interface LinkingProps {
 export const LoginContainer = ({children}: LoginContainerProps) => {
     const {loggedIn, checkLoggedIn} = useLogin();
 
-    const urlEventHandler = (event: LinkingProps) => {
+    const urlEventHandler = async (event: LinkingProps) => {
         let jwtToken = event.url.split("=")[1];
         if (jwtToken !== undefined)
             if (jwtToken.includes("#"))
-                jwtToken = jwtToken.substring(0, jwtToken.length - 1)
-        SecureStore.setItemAsync("JwtToken", jwtToken)
+                jwtToken = jwtToken.substring(0, jwtToken.length - 1);
+        await SecureStore.setItemAsync("JwtToken", jwtToken)
         checkLoggedIn()
     };
 
