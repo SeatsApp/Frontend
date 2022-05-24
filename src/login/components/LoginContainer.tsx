@@ -40,8 +40,11 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
                 checkLoggedIn();
             });
         } else {
-            Linking.addEventListener('url', urlEventHandler);
-            return () => Linking.removeEventListener('url', urlEventHandler);
+            checkLoggedIn();
+            if (!loggedIn) {
+                Linking.addEventListener('url', urlEventHandler);
+                return () => Linking.removeEventListener('url', urlEventHandler);
+            }
         }
     }, [])
 
