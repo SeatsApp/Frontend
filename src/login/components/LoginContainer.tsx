@@ -1,10 +1,9 @@
-import React, { useEffect } from "react"
+import React, {useEffect} from "react"
 import useLogin from "../hooks/useLogin";
-import { OpenURLButton } from "./OpenUrlButton"
+import {OpenURLButton} from "./OpenUrlButton"
 import * as SecureStore from 'expo-secure-store';
-import { Text } from "react-native-paper";
-import { Platform, Linking, View } from "react-native";
-import { backendUrl } from '../../config/EnvironmentVariableConfig'
+import {Platform, Linking, View, ImageBackground} from "react-native";
+import {backendUrl} from '../../config/EnvironmentVariableConfig'
 
 interface LoginContainerProps {
     children: JSX.Element;
@@ -14,8 +13,8 @@ interface LinkingProps {
     url: string;
 }
 
-export const LoginContainer = ({ children }: LoginContainerProps) => {
-    const { loggedIn, checkLoggedIn } = useLogin();
+export const LoginContainer = ({children}: LoginContainerProps) => {
+    const {loggedIn, checkLoggedIn} = useLogin();
 
     const urlEventHandler = (event: LinkingProps) => {
         let jwtToken = event.url.split("=")[1];
@@ -52,12 +51,15 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
         : backendUrl + "/api/login/expo"
     if (loggedIn) {
         return children
-    }
-    else {
+    } else {
         return (
-            <View style={{ alignItems: 'center', justifyContent: 'center', position: 'relative', height: '50%' }}>
-                <Text style={{ margin: 20, fontSize: 20, textAlign: 'center' }}>You have to login with your cronos account.</Text>
-                <OpenURLButton url={loginUrl} />
+            <View style={{width: '100%', height: '100%'}}>
+                <ImageBackground resizeMode='cover' style={{
+                    flex: 1,
+                    justifyContent: "center"
+                }} source={require('../../../assets/cronosLogin.png')}>
+                    <OpenURLButton url={loginUrl}/>
+                </ImageBackground>
             </View>
         )
     }
