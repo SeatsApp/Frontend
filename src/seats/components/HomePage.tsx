@@ -3,9 +3,9 @@ import ActionMenu from './ActionMenu'
 import CardSeat from './CardSeat';
 import {Seat} from '../types/Seat';
 import BuildingFloorPlan from '../../svg/components/BuildingFloorPlan';
-import {DeviceEventEmitter, View, ScrollView, Dimensions} from 'react-native';
+import {DeviceEventEmitter, View, ScrollView, ImageBackground} from 'react-native';
 import DatePicker from "../../dateTimePicker/components/DatePicker";
-import {Button, Portal, ToggleButton} from "react-native-paper";
+import {Button, Portal, ToggleButton, Text} from "react-native-paper";
 import ReserveSeatDialog from './ReserveSeatDialog';
 import useGetSeatStatus from '../hooks/useGetSeatStatus';
 import useBuilding from '../hooks/useBuilding';
@@ -46,9 +46,9 @@ export default function HomePage() {
                 <ToggleButton status={!showSeatsList ? 'unchecked' : 'checked'}
                               style={{
                                   marginRight: 2, marginLeft: 5,
-                                  backgroundColor: showSeatsList ? theme.colors.accent : '#fff'
+                                  backgroundColor: showSeatsList ? theme.colors.primary : '#fff'
                               }}
-                              color={showSeatsList ? '#fff' : theme.colors.accent}
+                              color={showSeatsList ? '#fff' : theme.colors.primary}
                               icon={'format-list-text'} onPress={onToggleSwitch}
 
                 />
@@ -94,11 +94,16 @@ export default function HomePage() {
     }, [loading])
 
     return (
+
         <View style={{
             flexShrink: 1,
-            height: Dimensions.get("window").height,
-            width: Dimensions.get("window").width
+            height: '100%',
+            width: '100%'
         }}>
+            <ImageBackground resizeMode='cover' style={{
+                flex: 1,
+                justifyContent: "center"
+            }} source={require('../../../assets/cronosLogin.png')}>
             <ActionMenu/>
             {clickedSeat !== undefined &&
                 <Portal>
@@ -114,12 +119,14 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 5,
-                justifyContent: 'space-between'
+                margin: 5,
+                justifyContent: 'space-evenly',
+                backgroundColor: theme.colors.primary
             }}>
                 <DatePicker updateState={setDate} date={date}/>
+                <Text style={{color: theme.colors.accent}}>|</Text>
                 <Button onPress={() => setFilterVisible(true)}
-                        style={{width: '40%',}} icon='filter'>filter</Button>
+                        color={theme.colors.accent} icon='tune'>filter</Button>
             </View>
             {showSeatsList ?
                 <ScrollView>
@@ -138,6 +145,7 @@ export default function HomePage() {
                                        floorPoints={selectedBuilding.floorPoints}/>
                 </ReactNativeZoomableView>
             }
+            </ImageBackground>
         </View>
     )
 }

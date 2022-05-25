@@ -6,6 +6,11 @@ export const theme = {
     colors: {
         ...DefaultTheme.colors,
         primary: '#525464',
-        accent: '#04689a',
+        accent: '#d1e4dd',
+        error: '#e04457',
+        warning: '#ffc81f',
+        white: '#ffffff',
+        black: '#222633',
+        third: '#645ca2'
     },
 };
