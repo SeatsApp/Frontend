@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Title, Paragraph, Portal, Text } from 'react-native-paper';
+import { Card, Button, Title, Portal, Text } from 'react-native-paper';
 import { Seat } from '../types/Seat'
 import ReserveSeatDialog from "./ReserveSeatDialog";
 import useStatusColor from '../hooks/UseStatusColor';
@@ -27,7 +27,6 @@ export default function CardSeat({ seat, date }: CardSeatProps) {
                             {seat.seatStatus.toString().replace("_", " ")}
                         </Text>
                     </View>
-                    <Paragraph>Floor</Paragraph>
                 </Card.Content>
                 <Card.Actions>
                     <Button onPress={async () => {
