@@ -1,9 +1,9 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import useLogin from "../hooks/useLogin";
-import {OpenURLButton} from "./OpenUrlButton"
+import { OpenURLButton } from "./OpenUrlButton"
 import * as SecureStore from 'expo-secure-store';
-import {Platform, Linking, View, ImageBackground} from "react-native";
-import {backendUrl} from '../../config/EnvironmentVariableConfig'
+import { Platform, Linking, View, ImageBackground } from "react-native";
+import { backendUrl } from '../../config/EnvironmentVariableConfig'
 
 interface LoginContainerProps {
     children: JSX.Element;
@@ -13,15 +13,16 @@ interface LinkingProps {
     url: string;
 }
 
-export const LoginContainer = ({children}: LoginContainerProps) => {
-    const {loggedIn, checkLoggedIn} = useLogin();
+export const LoginContainer = ({ children }: LoginContainerProps) => {
+    const { loggedIn, checkLoggedIn } = useLogin();
 
     const urlEventHandler = async (event: LinkingProps) => {
         let jwtToken = event.url.split("=")[1];
-        if (jwtToken !== undefined)
+        if (jwtToken !== undefined) {
             if (jwtToken.includes("#"))
                 jwtToken = jwtToken.substring(0, jwtToken.length - 1);
-        await SecureStore.setItemAsync("JwtToken", jwtToken)
+            await SecureStore.setItemAsync("JwtToken", jwtToken)
+        }
         checkLoggedIn()
     };
 
@@ -53,12 +54,12 @@ export const LoginContainer = ({children}: LoginContainerProps) => {
         return children
     } else {
         return (
-            <View style={{width: '100%', height: '100%'}}>
+            <View style={{ width: '100%', height: '100%' }}>
                 <ImageBackground resizeMode='cover' style={{
                     flex: 1,
                     justifyContent: "center"
                 }} source={require('../../../assets/cronosLogin.png')}>
-                    <OpenURLButton url={loginUrl}/>
+                    <OpenURLButton url={loginUrl} />
                 </ImageBackground>
             </View>
         )

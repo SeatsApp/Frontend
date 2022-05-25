@@ -9,24 +9,33 @@ import Enzyme, { shallow } from "enzyme";
 import { Button } from "react-native-paper";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { SeatStatus } from "../../src/seats/types/SeatStatus";
+import { Seat } from "../../src/seats/types/Seat";
 
 Enzyme.configure({ adapter: new Adapter() });
 
 
 test("renders the cardseat correctly", () => {
+    const mockUpdateDialog = jest.fn();
+
     const tree = renderer.create(<CardSeat seat={{
         id: 1, name: "1A",
         seatStatus: SeatStatus.AVAILABLE, reservations: []
-    }} date={new Date()} />).toJSON();
+    }} updateDialog={function (seat: Seat, visible: boolean): void {
+        mockUpdateDialog(seat, visible)
+    }} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
 test("renders the cardseat correctly with reservation", () => {
+    const mockUpdateDialog = jest.fn();
+
     const tree = renderer.create(<CardSeat seat={{
         id: 1, name: "test",
         seatStatus: SeatStatus.AVAILABLE,
         reservations: [{ id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false }]
-    }} date={new Date()} />).toJSON();
+    }} updateDialog={function (seat: Seat, visible: boolean): void {
+        mockUpdateDialog(seat, visible)
+    }} />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
@@ -51,16 +60,16 @@ test("Reserve should call api with correct parameters", async () => {
 });
 
 test("changeState on button press", async () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, 'useState');
-    useStateSpy.mockImplementation(() => [false, setState])
+    const mockUpdateDialog = jest.fn();
 
     const wrapper = shallow(<CardSeat seat={{
         id: 1, name: "1A",
         seatStatus: SeatStatus.AVAILABLE, reservations: []
-    }} date={new Date()} />);
+    }} updateDialog={function (seat: Seat, visible: boolean): void {
+        mockUpdateDialog(seat, visible)
+    }} />);
 
     wrapper.find(Button).at(0).simulate('press');
 
-    expect(setState).toHaveBeenCalledTimes(1);
+    expect(mockUpdateDialog).toHaveBeenCalledTimes(1);
 });
