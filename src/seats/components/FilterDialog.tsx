@@ -1,9 +1,11 @@
-import React, {Dispatch, SetStateAction, useState} from 'react'
-import {ScrollView, View} from "react-native";
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { ScrollView, View } from "react-native";
 import DayShortcutButtons from "./DayShortcutButtons";
 import TimePicker from "../../dateTimePicker/components/TimePicker";
-import {Button, Card, Dialog, IconButton, Title} from "react-native-paper";
-import {theme} from "../../../theme";
+import { Button, Card, Dialog, IconButton, Title } from "react-native-paper";
+import { theme } from "../../../theme";
+import DropDownBuildingFloorList from './DropDownBuildingFloorList';
+import { SelectedBuilding } from '../types/SelectedBuilding';
 
 interface DialogProps {
     setStartTime: Dispatch<SetStateAction<string>>;
@@ -12,9 +14,12 @@ interface DialogProps {
     endTime: string;
     visible: boolean;
     setVisible: Dispatch<SetStateAction<boolean>>;
+    selectedBuilding: SelectedBuilding;
+    refetchBuilding: () => void;
 }
 
-export default function FilterDialog({setEndTime, setStartTime, setVisible, startTime, endTime, visible}: DialogProps) {
+export default function FilterDialog({ setEndTime, setStartTime, setVisible, refetchBuilding,
+    startTime, endTime, visible, selectedBuilding }: DialogProps) {
     const [chosenStartTime, setChosenStartTime] = useState<string>(startTime);
     const [chosenEndTime, setChosenEndTime] = useState<string>(endTime);
 
@@ -39,29 +44,38 @@ export default function FilterDialog({setEndTime, setStartTime, setVisible, star
                     <ScrollView style={{width: '100%'}}>
                         <Card style={{margin: 5}}>
                             <Card.Content>
-                                <View style={{display: 'flex', flexDirection: 'column'}}>
+                                <View style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Title>Available:</Title>
                                     <ScrollView horizontal>
                                         <DayShortcutButtons chosenStartTime={chosenStartTime}
-                                                            chosenEndTime={chosenEndTime}
-                                                            setStartTime={setChosenStartTime}
-                                                            setEndTime={setChosenEndTime}/>
+                                            chosenEndTime={chosenEndTime}
+                                            setStartTime={setChosenStartTime}
+                                            setEndTime={setChosenEndTime} />
                                     </ScrollView>
                                 </View>
                             </Card.Content>
                         </Card>
-                        <Card style={{margin: 5}}>
+                        <Card style={{ margin: 5 }}>
                             <Card.Content>
-                                <View style={{display: 'flex', flexDirection: 'column'}}>
+                                <View style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Title>Custom time:</Title>
                                     <TimePicker setStartTime={setChosenStartTime} setEndTime={setChosenEndTime}
-                                                startTime={chosenStartTime} endTime={chosenEndTime}/>
+                                        startTime={chosenStartTime} endTime={chosenEndTime} />
+                                </View>
+                            </Card.Content>
+                        </Card>
+                        <Card style={{ margin: 5 }}>
+                            <Card.Content>
+                                <View style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Title>Selected building and floor:</Title>
+                                    <DropDownBuildingFloorList selectedBuilding={selectedBuilding} 
+                                    refetchBuilding={refetchBuilding} />
                                 </View>
                             </Card.Content>
                         </Card>
                     </ScrollView>
-                    <Button onPress={onClick} style={{marginBottom: 10}} mode={'contained'}
-                            color={theme.colors.accent}>Filter</Button>
+                    <Button onPress={onClick} style={{ marginBottom: 10 }} mode={'contained'}
+                        color={theme.colors.accent}>Filter</Button>
                 </View>
             </View>
         </Dialog>
