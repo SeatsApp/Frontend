@@ -63,9 +63,7 @@ test("cancel reservation succesfull test", async () => {
         startDateTime: "2022-5-20 15:00:00",
         endDateTime: "2022-5-20 16:00:00",
         checkedIn: true
-    }} refetchMyReservations={function (): void {
-        console.info("test")
-    }} />);
+    }} refetchMyReservations={jest.fn()} />);
 
     act(() => {
         fireEvent.press(getByTestId("CancelReservation"));
