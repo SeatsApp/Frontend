@@ -9,9 +9,11 @@ import { AxiosPromise } from "axios";
 import { toast } from "@jamsch/react-native-toastify";
 import { fireEvent, render } from "@testing-library/react-native";
 import { SeatStatus } from "../../src/seats/types/SeatStatus";
+import * as SecureStore from 'expo-secure-store';
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'debug').mockImplementation();
     jest.spyOn(console, 'error').mockImplementation();
 });
 
@@ -30,7 +32,13 @@ test("renders correctly", () => {
 });
 
 test("handleReserve succesfull test", async () => {
-    mocked(AxiosClient).mockResolvedValue(Promise.resolve() as unknown as AxiosPromise<void>);
+    jest.spyOn(SecureStore, 'setItemAsync').mockImplementation();
+
+    const json = {
+        data: 1
+    }
+
+    mocked(AxiosClient).mockResolvedValue(Promise.resolve(json) as unknown as AxiosPromise<void>);
 
     jest.spyOn(React, 'useState')
         .mockImplementationOnce(() => ["15:00", () => null])
@@ -45,6 +53,7 @@ test("handleReserve succesfull test", async () => {
     act(() => {
         fireEvent.press(getByTestId("ReserveButton"));
     });
+
 
     expect(AxiosClient).toHaveBeenCalledWith({
         url: '/api/seats/1/reserve', method: 'patch',
