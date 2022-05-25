@@ -26,7 +26,7 @@ export default function HomePage() {
                 <ActionMenu />
                 <ScrollView>
                     <DatePicker updateState={setDate} date={date} />
-                    <BuildingFloorPlan seats={seats} company={Companies.Xplore_Group} floorNumber={1} />
+                    <BuildingFloorPlan date={date} seats={seats} company={Companies.Xplore_Group} floorNumber={1} />
                     {seats.map((seat: Seat) => (
                         <CardSeat date={date} key={seat.id} seat={seat} />
                     ))}
