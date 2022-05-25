@@ -7,7 +7,6 @@ import { toast } from "@jamsch/react-native-toastify";
 import { DeviceEventEmitter, Platform, View } from "react-native";
 import { Reservation } from "../types/Reservation";
 import usePushNotifications from "../../pushNotifications/hooks/usePushNotifications";
-import DayShortcutButtons from "./DayShortcutButtons";
 import { getDateTimeString, getTime } from "../../shared/hooks/DateSplitter";
 
 interface Props {
@@ -76,7 +75,6 @@ export default function ReserveSeatDialog({ seat, visible, date, startTime, endT
                     </View>
                 )}
                 <View>
-                    <DayShortcutButtons setStartTime={setStartTime} setEndTime={setEndTime} />
                     <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                         <TimePicker setStartTime={setStartTime} setEndTime={setEndTime}
                             startTime={startTimeReservation} endTime={endTimeReservation} />

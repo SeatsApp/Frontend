@@ -15,6 +15,7 @@ export default function BuildingFloorPlan({ seats, floorPoints, updateDialog }: 
     let heightPoint = 0
     let widthPoint = 0
     let stringPoints = ""
+
     floorPoints.forEach((point: Point) => {
         if (widthPoint < point.firstPoint) {
             widthPoint = point.firstPoint

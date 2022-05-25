@@ -98,38 +98,3 @@ test("cancel dialog on button click", async () => {
     expect(mockSetState).toHaveBeenCalledTimes(1);
     expect(mockSetState).toHaveBeenCalledWith(false);
 });
-
-test("handle shortcut buttons correct", () => {
-    const mockedSetState = jest.fn();
-    jest.spyOn(React, 'useState')
-        .mockImplementationOnce(() => ["", mockedSetState])
-        .mockImplementationOnce(() => ["", mockedSetState]);
-
-    const { getByText } = render(<ReserveSeatDialog seat={{
-        id: 1, name: "test",
-        seatStatus: SeatStatus.AVAILABLE, reservations: [],
-        xcoordinates: 0, ycoordinates: 0,
-        width: 0, height: 0
-    }} setDialogVisible={() => true} visible={true} date={new Date(2024, 11, 24, 10, 5, 6)} startTime={""} endTime={""} />);
-
-    act(() => {
-        fireEvent.press(getByText("Forenoon"));
-    });
-
-    expect(mockedSetState).toHaveBeenCalledWith("00:00");
-    expect(mockedSetState).toHaveBeenCalledWith("12:00");
-
-    act(() => {
-        fireEvent.press(getByText("Afternoon"));
-    });
-
-    expect(mockedSetState).toHaveBeenCalledWith("12:00");
-    expect(mockedSetState).toHaveBeenCalledWith("24:00");
-
-    act(() => {
-        fireEvent.press(getByText("Whole Day"));
-    });
-
-    expect(mockedSetState).toHaveBeenCalledWith("00:00");
-    expect(mockedSetState).toHaveBeenCalledWith("24:00");
-});
