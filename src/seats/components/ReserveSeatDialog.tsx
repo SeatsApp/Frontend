@@ -4,10 +4,11 @@ import TimePicker from "../../dateTimePicker/components/TimePicker";
 import useSeat from "../../shared/hooks/useSeat";
 import {Seat} from "../types/Seat";
 import {toast} from "@jamsch/react-native-toastify";
-import {DeviceEventEmitter, View} from "react-native";
+import {DeviceEventEmitter, Platform, View} from "react-native";
 import {Reservation} from "../types/Reservation";
 import usePushNotifications from "../../pushNotifications/hooks/usePushNotifications";
 import DayShortcutButtons from "./DayShortcutButtons";
+import {getDateTimeString, getTime} from "../../shared/hooks/DateSplitter";
 
 interface Props {
     seat: Seat,
@@ -23,10 +24,7 @@ export default function ReserveSeatDialog({seat, visible, setDialogVisible, date
 
     const handleReserve = async () => {
         if (startTime.length != 0 && endTime.length != 0 && date != undefined) {
-            const startTimeWithDate = date.toJSON().substring(0, 10) + " " + (startTime.length < 3 ? startTime + ":00" : startTime) + ":00";
-            const endTimeWithDate = date.toJSON().substring(0, 10) + " " + (endTime.length < 3 ? endTime + ":00" : endTime) + ":00";
-
-            await reserveSeat(seat.id, startTimeWithDate, endTimeWithDate)
+            await reserveSeat(seat.id, getDateTimeString(date, startTime), getDateTimeString(date, endTime))
                 .then((response: any) => {
                     date.setHours(parseInt(startTime.substring(0, 2)))
                     date.setMinutes(0)
@@ -34,10 +32,12 @@ export default function ReserveSeatDialog({seat, visible, setDialogVisible, date
                     const timeBeforeReservation = 15 * 60
                     const timeBetween = Math.floor((date.getTime() - new Date().getTime()) / 1000) - timeBeforeReservation
 
-                    const { scheduleReservationNotification } = usePushNotifications()
-                    scheduleReservationNotification(timeBetween,
-                        "Your reservation for the seat " + seat.name + " is in 15 minutes.",
-                        response.data)
+                    if (Platform.OS !== "web") {
+                        const { scheduleReservationNotification } = usePushNotifications()
+                        scheduleReservationNotification(timeBetween,
+                            "Your reservation for the seat " + seat.name + " is in 15 minutes.",
+                            response.data)
+                    }
                 });
 
             DeviceEventEmitter.emit("event.refetchSeats", {});
@@ -57,7 +57,8 @@ export default function ReserveSeatDialog({seat, visible, setDialogVisible, date
                         <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                             {seat.reservations.map((res: Reservation, index) => (
                                 <Text style={{color: 'red'}}
-                                      key={index}>{res.startDateTime.substring(10, 15)} - {res.endDateTime.substring(10, 15)}</Text>
+                                      key={index}>{getTime(res.startDateTime)}:00 - {getTime(res.endDateTime) === "00" ?
+                                    "24" : getTime(res.endDateTime)}:00</Text>
                             ))}
                         </View>
                     </View>

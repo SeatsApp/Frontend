@@ -13,10 +13,9 @@ import { Provider } from 'react-native-paper'
 export default function HomePage() {
     const [date, setDate] = useState<Date>(new Date());
     const { readSeatsByDate } = useSeat();
-    const [showSeatsList, setShowSeatsList] = useState<boolean>(false)
+    const [showSeatsList, setShowSeatsList] = useState<boolean>(false);
 
-    const { seats, refetchSeats } = readSeatsByDate(date.toJSON().substring(0, 10));
-
+    const { seats, refetchSeats } = readSeatsByDate(date.toJSON().split("T")[0]);
     DeviceEventEmitter.removeAllListeners()
     DeviceEventEmitter.addListener("event.refetchSeats", () =>
         refetchSeats()

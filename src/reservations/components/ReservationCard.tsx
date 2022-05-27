@@ -5,6 +5,7 @@ import { UserReservation } from '../type/UserReservation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { DeviceEventEmitter, View } from "react-native";
 import usePushNotifications from "../../pushNotifications/hooks/usePushNotifications";
+import {getTime} from "../../shared/hooks/DateSplitter";
 
 interface ReservationCardProps {
     userReservation: UserReservation
@@ -12,18 +13,7 @@ interface ReservationCardProps {
 }
 
 export default function ReservationCard({ userReservation, refetchMyReservations }: ReservationCardProps) {
-    const { cancelReservationNotification } = usePushNotifications()
-    const startTime = (userReservation.startDateTime.charAt(12) == ":") ?
-        userReservation.startDateTime.substring(10, 15) :
-        userReservation.startDateTime.substring(10, 14)
-
-    let endTime = (userReservation.endDateTime.charAt(12) == ":") ?
-        userReservation.endDateTime.substring(10, 15) :
-        userReservation.endDateTime.substring(10, 14)
-
-    if (endTime === "0:00") {
-        endTime = "24:00"
-    }
+    const { cancelReservationNotification } = usePushNotifications();
 
     return (
         <View>
@@ -34,7 +24,8 @@ export default function ReservationCard({ userReservation, refetchMyReservations
                         <Text>
                             Date: {userReservation.startDateTime.substring(0, 10)}
                         </Text>
-                        <Text>Time: {startTime} - {endTime}</Text>
+                        <Text>Time: {getTime(userReservation.startDateTime)}:00 - {getTime(userReservation.endDateTime) === "00" ?
+                            "24" : getTime(userReservation.endDateTime)}:00</Text>
                         <Text>checked in: {userReservation.checkedIn ?
                             <Icon name={"check"} size={25} color="green" /> :
                             <Icon name={"minus-circle"} size={25} color="red" />}</Text>
