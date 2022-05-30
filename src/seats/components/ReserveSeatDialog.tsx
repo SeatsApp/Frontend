@@ -30,8 +30,9 @@ export default function ReserveSeatDialog({ seat, visible, date, startTime, endT
     }, [startTime, endTime])
 
     const handleReserve = async () => {
-        if (startTime.length != 0 && endTime.length != 0 && date != undefined) {
-            await reserveSeat(seat.id, getDateTimeString(date, startTime), getDateTimeString(date, endTime))
+        if (startTimeReservation.length != 0 && endTimeReservation.length != 0 && date != undefined) {
+            await reserveSeat(seat.id, getDateTimeString(date, startTimeReservation),
+                getDateTimeString(date, endTimeReservation))
                 .then((response: any) => {
                     date.setHours(parseInt(startTimeReservation.substring(0, 2)))
                     date.setMinutes(0)

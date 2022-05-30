@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button, Title, Text } from 'react-native-paper';
 import { Seat } from '../types/Seat'
-import useStatusColor from '../hooks/UseStatusColor';
+import useStatusColor from '../hooks/useStatusColor';
 import { SeatStatus } from '../types/SeatStatus';
 import { View } from "react-native";
 

@@ -19,7 +19,9 @@ test("renders the cardseat correctly", () => {
 
     const tree = renderer.create(<CardSeat seat={{
         id: 1, name: "1A",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} updateDialog={function (seat: Seat, visible: boolean): void {
         mockUpdateDialog(seat, visible)
     }} />).toJSON();
@@ -32,7 +34,9 @@ test("renders the cardseat correctly with reservation", () => {
     const tree = renderer.create(<CardSeat seat={{
         id: 1, name: "test",
         seatStatus: SeatStatus.AVAILABLE,
-        reservations: [{ id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false }]
+        reservations: [{ id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false }],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} updateDialog={function (seat: Seat, visible: boolean): void {
         mockUpdateDialog(seat, visible)
     }} />).toJSON();
@@ -64,7 +68,9 @@ test("changeState on button press", async () => {
 
     const wrapper = shallow(<CardSeat seat={{
         id: 1, name: "1A",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} updateDialog={function (seat: Seat, visible: boolean): void {
         mockUpdateDialog(seat, visible)
     }} />);

@@ -24,7 +24,9 @@ jest.mock("../../src/utils/AxiosClient");
 test("renders correctly", () => {
     const tree = renderer.create(<ReserveSeatDialog seat={{
         id: 1, name: "test", seatStatus: SeatStatus.AVAILABLE,
-        reservations: [{ id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false }]
+        reservations: [{ id: 1, startDateTime: "2022-04-22 15:00:00", endDateTime: "2022-04-22 16:00:00", checkedIn: false }],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }}
         setDialogVisible={() => true}
         visible={true} date={new Date()} startTime={""} endTime={""} />).toJSON();
@@ -46,9 +48,11 @@ test("handleReserve succesfull test", async () => {
 
     const { getByTestId } = render(<ReserveSeatDialog seat={{
         id: 1, name: "test",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} setDialogVisible={() => true}
-    visible={true} date={new Date(2024, 11, 24, 10, 5, 6)} startTime={"15:00"} endTime={"16:00"} />);
+        visible={true} date={new Date(2024, 11, 24, 10, 5, 6)} startTime={"15:00"} endTime={"16:00"} />);
 
     act(() => {
         fireEvent.press(getByTestId("ReserveButton"));
@@ -63,9 +67,11 @@ test("handleReserve with failure", async () => {
 
     const { getByTestId } = render(<ReserveSeatDialog seat={{
         id: 1, name: "test",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} setDialogVisible={() => true}
-    visible={true} date={new Date()} startTime={""} endTime={""} />);
+        visible={true} date={new Date()} startTime={""} endTime={""} />);
 
     act(() => {
         fireEvent.press(getByTestId("ReserveButton"));
@@ -79,9 +85,11 @@ test("cancel dialog on button click", async () => {
 
     const { getByTestId } = render(<ReserveSeatDialog seat={{
         id: 1, name: "test",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} setDialogVisible={mockSetState}
-    visible={true} date={new Date()} startTime={""} endTime={""} />);
+        visible={true} date={new Date()} startTime={""} endTime={""} />);
 
     act(() => {
         fireEvent.press(getByTestId("CancelButton"));
@@ -99,7 +107,9 @@ test("handle shortcut buttons correct", () => {
 
     const { getByText } = render(<ReserveSeatDialog seat={{
         id: 1, name: "test",
-        seatStatus: SeatStatus.AVAILABLE, reservations: []
+        seatStatus: SeatStatus.AVAILABLE, reservations: [],
+        xcoordinates: 0, ycoordinates: 0,
+        width: 0, height: 0
     }} setDialogVisible={() => true} visible={true} date={new Date(2024, 11, 24, 10, 5, 6)} startTime={""} endTime={""} />);
 
     act(() => {
