@@ -1,20 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dimensions, View, Platform } from 'react-native'
 import Svg, { G, Polyline } from 'react-native-svg'
 import { Seat } from '../../../seats/types/Seat';
 import OfficeIsland from '../../components/OfficeIsland'
-import ReserveSeatDialog from "../../../seats/components/ReserveSeatDialog";
-import { Portal } from "react-native-paper";
 
 interface XploreGroupFloor1Props {
     seats: Seat[];
-    date: Date;
+    updateDialog(seat: Seat, visible: boolean): void
 }
 
-export default function XploreGroupFloor1({ seats, date }: XploreGroupFloor1Props) {
-    const [dialogVisible, setDialogVisible] = useState<boolean>(false);
-    const [clickedSeat, setClickedSeat] = useState<Seat | undefined>(undefined);
-
+export default function XploreGroupFloor1({ seats, updateDialog }: XploreGroupFloor1Props) {
     const originalWidth = 1600;
     const originalHeight = 2100;
 
@@ -23,20 +18,12 @@ export default function XploreGroupFloor1({ seats, date }: XploreGroupFloor1Prop
 
     function updateStates(seat: Seat) {
         if (seat !== undefined) {
-            setClickedSeat(seat);
-            setDialogVisible(true);
+            updateDialog(seat, true)
         }
     }
 
     return (<View style={{ display: 'flex', alignItems: 'center' }}>
         <View style={{ width: windowWidth, aspectRatio }}>
-            {(
-                clickedSeat !== undefined &&
-                <Portal>
-                    <ReserveSeatDialog date={date} visible={dialogVisible} setDialogVisible={setDialogVisible}
-                        seat={clickedSeat} />
-                </Portal>
-            )}
             <Svg
                 width="100%"
                 height="100%"

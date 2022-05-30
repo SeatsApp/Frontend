@@ -6,12 +6,12 @@ import XploreGroupFloor1 from './XploreGroupFloor1';
 interface XploreGroupFloorPlanProps {
     seats: Seat[];
     floorNumber: number;
-    date: Date;
+    updateDialog(seat: Seat, visible: boolean): void
 }
 
-export default function XploreGroupFloorPlan({ seats, floorNumber, date }: XploreGroupFloorPlanProps) {
+export default function XploreGroupFloorPlan({ seats, floorNumber, updateDialog }: XploreGroupFloorPlanProps) {
     if (floorNumber == 1) {
-        return (<XploreGroupFloor1 date={date} seats={seats} />)
+        return (<XploreGroupFloor1 updateDialog={updateDialog} seats={seats} />)
     }
     return (<View />)
 }

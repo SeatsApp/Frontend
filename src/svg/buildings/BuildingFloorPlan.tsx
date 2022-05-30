@@ -8,14 +8,14 @@ interface BuildingFloorPlanProps {
     seats: Seat[];
     company: Companies;
     floorNumber: number;
-    date: Date;
+    updateDialog(seat: Seat, visible: boolean): void
 }
 
-export default function BuildingFloorPlan({seats, company, floorNumber, date}: BuildingFloorPlanProps) {
+export default function BuildingFloorPlan({seats, company, floorNumber, updateDialog}: BuildingFloorPlanProps) {
     if (company == Companies.Xplore_Group)
         return (
             <View>
-                <XploreGroupFloorPlan date={date} seats={seats} floorNumber={floorNumber}/>
+                <XploreGroupFloorPlan updateDialog={updateDialog} seats={seats} floorNumber={floorNumber}/>
             </View>
         )
     return <View/>

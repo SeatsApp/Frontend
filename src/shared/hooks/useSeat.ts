@@ -15,9 +15,10 @@ export default function useSeat() {
     }).then((response: unknown) => {
       toast.success("Successfully reserved the seat between " + startTime + " and " + endTime + ".")
       return response
-    }).catch(() => {
+    }).catch((error: unknown) => {
       /* istanbul ignore next */
       toast.error("Reserving the seat failed.")
+      return error
     })
   }
 
