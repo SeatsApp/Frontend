@@ -4,7 +4,7 @@ import { SelectedBuilding } from '../types/SelectedBuilding';
 export default function useBuilding() {
     function readSelectedBuildingByDate(buildingId: number, floorId: number, date: string) {
         const { data: selectedBuilding, refetch: refetchSeats } =
-            useGet<SelectedBuilding>(`/api/buildings/${buildingId}?floorId=${floorId}&date=${date}`,
+            useGet<SelectedBuilding>(`/api/buildings/${buildingId}/floors/${floorId}?date=${date}`,
                 {
                     buildingId: 0,
                     buildingName: "",
