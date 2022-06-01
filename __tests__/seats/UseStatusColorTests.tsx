@@ -1,4 +1,4 @@
-import useStatusColor from "../../src/seats/hooks/UseStatusColor";
+import useStatusColor from "../../src/seats/hooks/useStatusColor";
 import { SeatStatus } from "../../src/seats/types/SeatStatus";
 
 test("should return the color for partially booked", async () => {

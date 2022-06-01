@@ -30,14 +30,6 @@ export default function useSeat() {
     };
   }
 
-  function readSeatsByDate(date: string) {
-    const { data: seats, refetch: refetchSeats } = useGet<Seat[]>(`/api/seats/reservations/date/` + date, []);
-    return {
-      seats,
-      refetchSeats,
-    };
-  }
-
   async function checkInSeat(seatId: number) {
     return axiosClient({
       url: '/api/seats/' + seatId + '/checkIn', method: 'patch',
@@ -50,7 +42,6 @@ export default function useSeat() {
 
   return {
     readSeats,
-    readSeatsByDate,
     reserveSeat,
     checkInSeat
   };

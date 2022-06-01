@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ActionMenu from './ActionMenu'
 import CardSeat from './CardSeat';
 import { Seat } from '../types/Seat';
-import useSeat from '../../shared/hooks/useSeat';
-import BuildingFloorPlan from '../../svg/buildings/BuildingFloorPlan';
-import { Companies } from '../../svg/buildings/Companies';
+import BuildingFloorPlan from '../../svg/components/BuildingFloorPlan';
 import { DeviceEventEmitter, View, ScrollView } from 'react-native';
 import DatePicker from "../../dateTimePicker/components/DatePicker";
 import SeatsSwitchButtons from './SeatsSwitchButtons';
@@ -13,14 +11,15 @@ import ReserveSeatDialog from './ReserveSeatDialog';
 import DayShortcutButtons from './DayShortcutButtons';
 import TimePicker from '../../dateTimePicker/components/TimePicker';
 import useGetSeatStatus from '../hooks/useGetSeatStatus';
+import useBuilding from '../hooks/useBuilding';
 
 export default function HomePage() {
     const [date, setDate] = useState<Date>(new Date());
-    const { readSeatsByDate } = useSeat();
+    const { readSelectedBuildingByDate } = useBuilding();
     const [showSeatsList, setShowSeatsList] = useState<boolean>(false);
 
-    const [startTime, setStartTime] = useState("0");
-    const [endTime, setEndTime] = useState("24");
+    const [startTime, setStartTime] = useState("00:00");
+    const [endTime, setEndTime] = useState("24:00");
 
     const [dialogVisible, setDialogVisible] = useState(false);
     const [clickedSeat, setClickedSeat] = useState<Seat | undefined>(undefined);
@@ -28,7 +27,7 @@ export default function HomePage() {
     const [seats, setSeats] = useState<Seat[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const { seats: foundSeats, refetchSeats } = readSeatsByDate(date.toJSON().substring(0, 10));
+    const { selectedBuilding, refetchSeats } = readSelectedBuildingByDate(1, 2, date.toJSON().split("T")[0]);
 
     DeviceEventEmitter.removeAllListeners()
     DeviceEventEmitter.addListener("event.refetchSeats", () =>
@@ -55,9 +54,9 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        setStatusForSeats(foundSeats, startTime, endTime, setLoading)
-        setSeats(foundSeats)
-    }, [foundSeats])
+        setStatusForSeats(selectedBuilding.seats, startTime, endTime, setLoading)
+        setSeats(selectedBuilding.seats)
+    }, [selectedBuilding.seats])
 
     useEffect(() => {
         setStatusForSeats(seats, startTime, endTime, setLoading)
@@ -83,12 +82,12 @@ export default function HomePage() {
                     <DayShortcutButtons setStartTime={setStartTime} setEndTime={setEndTime} />
                     <TimePicker setStartTime={setStartTime} setEndTime={setEndTime}
                         startTime={startTime} endTime={endTime} />
-                    <BuildingFloorPlan updateDialog={updateDialog} seats={seats} company={Companies.Xplore_Group} floorNumber={1} />
                     {showSeatsList ?
                         seats.map((seat: Seat) => (
                             <CardSeat updateDialog={updateDialog} key={seat.id} seat={seat} />
                         )) :
-                        <BuildingFloorPlan updateDialog={updateDialog} seats={seats} company={Companies.Xplore_Group} floorNumber={1} />
+                        <BuildingFloorPlan updateDialog={updateDialog} seats={seats}
+                            floorPoints={selectedBuilding.floorPoints} />
                     }
                 </ScrollView >
             </View >
