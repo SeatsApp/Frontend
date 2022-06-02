@@ -2,6 +2,7 @@ import {Button} from "react-native-paper";
 import React from "react";
 import {View} from "react-native";
 import {DatePickerModal} from "react-native-paper-dates";
+import {theme} from "../../../theme";
 
 interface Props {
     updateState: (date: Date) => void
@@ -24,8 +25,8 @@ export default function DatePicker({updateState, date}: Props) {
     );
 
     return (
-        <View style={{width: '60%'}}>
-            <Button onPress={() => setOpen(true)} uppercase={false} mode={'contained'}>
+        <View>
+            <Button labelStyle={{color: theme.colors.accent}} color={theme.colors.accent} icon={'calendar'} onPress={() => setOpen(true)} uppercase={false}>
                 {date.toLocaleDateString()}
             </Button>
             <DatePickerModal

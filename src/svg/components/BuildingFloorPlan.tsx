@@ -4,6 +4,7 @@ import { G, Polyline, Svg } from 'react-native-svg';
 import { Point } from '../../seats/types/Point';
 import { Seat as SeatObject } from '../../seats/types/Seat';
 import Seat from './Seat';
+import {theme} from "../../../theme";
 
 interface BuildingFloorPlanProps {
     seats: SeatObject[];
@@ -45,13 +46,13 @@ export default function BuildingFloorPlan({ seats, floorPoints, updateDialog }: 
                         <Polyline
                             //width,height
                             points={stringPoints}
-                            fill="none"
+                            fill={theme.colors.accent}
                             stroke="black"
                             strokeWidth="15"
                         />
                     </G>
                     {seats.map((seat: SeatObject) => (
-                        <Seat key={seat.id} seat={seat} updateDialog={updateDialog} ></Seat>
+                        <Seat key={seat.id} seat={seat} updateDialog={updateDialog} />
                     ))}
                 </Svg>
             </View>
