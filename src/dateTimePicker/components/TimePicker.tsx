@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import {View} from "react-native";
 import TimePickerDropDown from "./TimePickerDropDown";
 
 interface Props {
@@ -9,12 +9,19 @@ interface Props {
     setEndTime: (endTimeWith: string) => void,
 }
 
-export default function TimePicker({ startTime, endTime, setEndTime, setStartTime }: Props) {
+export default function TimePicker({startTime, endTime, setEndTime, setStartTime}: Props) {
     return (
         <>
-            <View style={{ display: 'flex', flexDirection: 'row', alignSelf: 'center', alignItems: 'center' }}>
-                <TimePickerDropDown updateState={setStartTime} time={startTime} timeName={'Start'} />
-                <TimePickerDropDown updateState={setEndTime} time={endTime} timeName={'End'} />
+            <View style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'space-evenly'
+            }}>
+                <TimePickerDropDown updateState={setStartTime} time={startTime} timeName={'Start'}/>
+                <TimePickerDropDown updateState={setEndTime} time={endTime} timeName={'End'}/>
             </View>
         </>
     )
