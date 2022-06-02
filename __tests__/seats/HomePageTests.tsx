@@ -1,27 +1,64 @@
-import { AxiosPromise } from "axios";
+import {AxiosPromise} from "axios";
 import React from "react";
-import renderer from "react-test-renderer";
-import { mocked } from "ts-jest/utils";
+import {mocked} from "ts-jest/utils";
 import HomePage from "../../src/seats/components/HomePage";
 import useSeat from "../../src/shared/hooks/useSeat";
 import AxiosClient from "../../src/utils/AxiosClient";
-import { Seat } from "../../src/seats/types/Seat";
-import { SeatStatus } from "../../src/seats/types/SeatStatus";
+import {Seat} from "../../src/seats/types/Seat";
+import {SeatStatus} from "../../src/seats/types/SeatStatus";
+import {render} from "@testing-library/react-native";
+import {Provider} from "react-native-paper";
+
 
 beforeEach(() => {
     jest.spyOn(console, 'warn').mockImplementation();
     jest.spyOn(console, 'error').mockImplementation();
 });
 
-jest.mock('@react-navigation/native');
+const mockedNavigate = jest.fn();
 
-test("renders the homepage correctly", () => {
-    const tree = renderer.create(<HomePage />).toJSON();
-    expect(tree).toMatchSnapshot();
+jest.mock('@react-navigation/native', () => {
+    const actualNav = jest.requireActual('@react-navigation/native');
+    return {
+        ...actualNav,
+        useNavigation: () => ({
+            setOptions: mockedNavigate,
+        }),
+    };
 });
 
 jest.mock("../../src/utils/AxiosClient");
-const { readSeats } = useSeat();
+const {readSeats} = useSeat();
+
+test("renders the homepage correctly", () => {
+    const jsonBuilding = {
+        data: {
+            buildingId: 1,
+            buildingName: '1A',
+            floorId: 1,
+            floorName: 'test',
+            floorPoints: [
+                {
+                    firstPoint: 5,
+                    secondPoint: 5
+                }
+            ],
+            seats: [{
+                id: 1,
+                name: '1A',
+                seatStatus: SeatStatus.AVAILABLE,
+                reservations: []
+            }]
+        }
+    }
+
+    // mock to resolve a Promise<void>
+    mocked(AxiosClient).mockResolvedValue(jsonBuilding as unknown as AxiosPromise<void>);
+
+    const tree = render(<Provider><HomePage/></Provider>).toJSON();
+    expect(tree).toMatchSnapshot();
+    expect(mockedNavigate).toHaveBeenCalledTimes(2);
+});
 
 test("should call api with correct parameters", async () => {
     const jsonSeats = {
@@ -55,7 +92,7 @@ test("should call api with correct parameters", async () => {
     jest.spyOn(React, 'useEffect')
         .mockImplementation()
 
-    const { seats: foundSeats } = readSeats();
+    const {seats: foundSeats} = readSeats();
 
     expect(foundSeats).toBe(seats)
 });

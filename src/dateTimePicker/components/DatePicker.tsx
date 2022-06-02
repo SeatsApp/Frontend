@@ -24,7 +24,7 @@ export default function DatePicker({updateState, date}: Props) {
     );
 
     return (
-        <View style={{margin: 5}}>
+        <View style={{width: '60%'}}>
             <Button onPress={() => setOpen(true)} uppercase={false} mode={'contained'}>
                 {date.toLocaleDateString()}
             </Button>

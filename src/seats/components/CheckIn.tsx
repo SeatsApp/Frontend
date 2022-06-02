@@ -1,48 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native';
-import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
-import { Button, Text } from 'react-native-paper';
+import React, {useEffect, useState} from 'react'
+import {View, StyleSheet} from 'react-native';
+import {BarCodeScanner, BarCodeScannerResult} from 'expo-barcode-scanner';
+import {Button, Text} from 'react-native-paper';
 import useSeat from '../../shared/hooks/useSeat';
 
 export default function CheckIn() {
     const [hasPermission, setHasPermission] = useState(false);
     const [scanned, setScanned] = useState(false);
-    const { checkInSeat } = useSeat();
+    const {checkInSeat} = useSeat();
 
     useEffect(() => {
         (async () => {
-            const { status } = await BarCodeScanner.requestPermissionsAsync();
+            const {status} = await BarCodeScanner.requestPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
     }, []);
 
-    const handleBarCodeScanned = (codeInfo: BarCodeScannerResult) => {
+    const handleBarCodeScanned = async (codeInfo: BarCodeScannerResult) => {
         setScanned(true);
-        checkInSeat(Number.parseInt(codeInfo.data));
+        await checkInSeat(Number.parseInt(codeInfo.data));
     };
 
-    if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
-    }
     if (!hasPermission) {
-        return <Text>No access to camera</Text>;
+        return (
+            <View style={{alignItems: 'center'}}>
+                <Text>
+                    No permission to access your camera.
+                </Text>
+            </View>
+        )
     }
 
     return (
-        <View testID={'CheckInView'} style={styles.container}>
+        <View testID={'CheckInView'} style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
             <BarCodeScanner testID={'BarCodeScanner'}
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                style={StyleSheet.absoluteFillObject}
+                            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                            style={StyleSheet.absoluteFillObject}
             />
-            {scanned && <Button onPress={() => setScanned(false)} >Tap to Scan Again</Button>}
+            {scanned &&
+                <Button mode='contained' onPress={() => setScanned(false)}>Tap to Scan Again</Button>}
+            <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold', marginTop: 5}}>
+                Scan the QR code on the desk you reserved to check in.
+            </Text>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center',
-    },
-  });

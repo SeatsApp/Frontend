@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import HomePage from './src/seats/components/HomePage';
 import { Provider } from 'react-native-paper'
 import { ToastContainer } from '@jamsch/react-native-toastify';
@@ -14,6 +14,7 @@ import { Platform } from "react-native";
 import { LoginContainer } from './src/login/components/LoginContainer';
 import CheckIn from './src/seats/components/CheckIn';
 import MyReservations from './src/reservations/components/MyReservations';
+import {theme} from "./theme";
 
 /* istanbul ignore next */
 if (Platform.OS === "android") {
@@ -24,21 +25,21 @@ if (Platform.OS === "android") {
 }
 
 export type RootStackParamList = {
-    Home: undefined;
+    Home: { startTime: string, endTime: string } | undefined;
     CheckIn: undefined;
     MyReservations: undefined;
+    FilterDialog: { startTime: string, endTime: string } | undefined;
 }
 
 export default function App() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
-
 
     useEffect(() => {
         registerTranslation('nl', nl);
     }, [])
 
     return (
-        <Provider>
+        <Provider theme={theme}>
             <LoginContainer>
                 <NavigationContainer>
                     <ToastContainer />

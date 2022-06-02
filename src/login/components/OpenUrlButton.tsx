@@ -3,6 +3,7 @@ import {Image, Linking, Platform, View} from "react-native";
 import * as WebBrowser from 'expo-web-browser';
 import {Button} from "react-native-paper";
 import {toast} from "@jamsch/react-native-toastify";
+import {theme} from "../../../theme";
 
 interface OpenUrlButtonProps {
     url: string;
@@ -26,10 +27,10 @@ export const OpenURLButton = ({url}: OpenUrlButtonProps) => {
     return (
         <View style={{ display: 'flex', alignItems: 'center'}}>
             <View style={{ display: 'flex', alignItems: 'center'}}>
-                <Image style={{width: 200, height: 200}} resizeMode='contain' source={require('../../../assets/cronosLogo.png')}/>
+                <Image style={{width: 200, height: 200}} resizeMode='contain' source={require('../../../assets/xploreGroup.png')}/>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                <Button style={{padding: 4}} icon='lock-open-outline' mode='contained'
+                <Button color={theme.colors.accent} style={{padding: 4}} icon='lock-open-outline' mode='contained'
                         onPress={() => handlePress()}>Connect
                     with Cronos</Button>
             </View>
