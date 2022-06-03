@@ -1,7 +1,7 @@
 import React from "react";
-import {fireEvent, render} from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import FilterDialog from "../../src/seats/components/FilterDialog";
-import {act} from "react-test-renderer";
+import { act } from "react-test-renderer";
 
 
 beforeEach(() => {
@@ -10,17 +10,41 @@ beforeEach(() => {
 });
 
 
-test("renders the filter page correctly with whole day", () => {
+test("renders the filter page correctly for all options", () => {
     const tree = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
-                                      endTime={'24:00'} visible={true} setVisible={jest.fn()}/>).toJSON();
+        endTime={'24:00'} visible={true} setVisible={jest.fn()} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />).toJSON();
     expect(tree).toMatchSnapshot();
 
     const tree2 = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'12:00'}
-                                      endTime={'24:00'} visible={true} setVisible={jest.fn()}/>).toJSON();
+        endTime={'24:00'} visible={true} setVisible={jest.fn()} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />).toJSON();
     expect(tree2).toMatchSnapshot();
 
     const tree3 = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
-                                      endTime={'12:00'} visible={true} setVisible={jest.fn()}/>).toJSON();
+        endTime={'12:00'} visible={true} setVisible={jest.fn()} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />).toJSON();
     expect(tree3).toMatchSnapshot();
 });
 
@@ -30,9 +54,17 @@ test("handle shortcut buttons correct", () => {
         .mockImplementationOnce(() => ["00:00", mockedSetState])
         .mockImplementationOnce(() => ["24:00", mockedSetState]);
 
-    const {getByText} = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
-                                             endTime={'24:00'} visible={true}
-                                             setVisible={jest.fn()}/>);
+    const { getByText } = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
+        endTime={'24:00'} visible={true}
+        setVisible={jest.fn()} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />);
 
     act(() => {
         fireEvent.press(getByText("Forenoon"));
@@ -62,9 +94,17 @@ test("handle filter button correct", () => {
         .mockImplementationOnce(() => ["10:00", () => null])
         .mockImplementationOnce(() => ["22:00", () => null]);
 
-    const {getByText} = render(<FilterDialog setStartTime={mockedSetState} setEndTime={mockedSetState} startTime={'00:00'}
-                                             endTime={'24:00'} visible={true}
-                                             setVisible={mockedSetState}/>);
+    const { getByText } = render(<FilterDialog setStartTime={mockedSetState} setEndTime={mockedSetState} startTime={'00:00'}
+        endTime={'24:00'} visible={true}
+        setVisible={mockedSetState} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />);
 
     act(() => {
         fireEvent.press(getByText("Filter"));
@@ -79,9 +119,17 @@ test("handle filter button correct", () => {
 test("handle close button correct", () => {
     const mockedSetState = jest.fn();
 
-    const {getByTestId} = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
-                                             endTime={'24:00'} visible={true}
-                                             setVisible={mockedSetState}/>);
+    const { getByTestId } = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
+        endTime={'24:00'} visible={true}
+        setVisible={mockedSetState} selectedBuilding={{
+            buildingId: 0,
+            buildingName: "",
+            floorId: 0,
+            floorName: "",
+            floorPoints: [],
+            seats: []
+        }}
+        refetchBuilding={jest.fn()} />);
     act(() => {
         fireEvent.press(getByTestId("iconButton"));
     });

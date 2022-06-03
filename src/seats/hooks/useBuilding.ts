@@ -1,9 +1,10 @@
 import useGet from '../../shared/hooks/useGet';
+import { Building } from '../types/Building';
 import { SelectedBuilding } from '../types/SelectedBuilding';
 
 export default function useBuilding() {
     function readSelectedBuildingByDate(buildingId: number, floorId: number, date: string) {
-        const { data: selectedBuilding, refetch: refetchSeats } =
+        const { data: selectedBuilding, refetchFilter: refetchFilterBuilding, loading } =
             useGet<SelectedBuilding>(`/api/buildings/${buildingId}/floors/${floorId}?date=${date}`,
                 {
                     buildingId: 0,
@@ -13,13 +14,29 @@ export default function useBuilding() {
                     floorPoints: [],
                     seats: []
                 });
+
+        const refetchBuilding = (refetchBuildingId: number, refetchFloorId: number, refetchDate: string) => {
+            refetchFilterBuilding(`/api/buildings/${refetchBuildingId}/floors/${refetchFloorId}?date=${refetchDate}`)
+        }
+
         return {
             selectedBuilding,
-            refetchSeats,
+            refetchBuilding,
+            loading
+        };
+    }
+
+    function readAllBuildings() {
+        const { data: allBuildings, loading } = useGet<Building[]>(`/api/buildings`, []);
+
+        return {
+            allBuildings,
+            loading
         };
     }
 
     return {
         readSelectedBuildingByDate,
+        readAllBuildings
     };
 }
