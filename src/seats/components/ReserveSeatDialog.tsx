@@ -15,7 +15,7 @@ interface Props {
     visible: boolean,
     date: Date
     startTime: string,
-    endTime: string
+    endTime: string,
     setDialogVisible: (b: boolean) => void,
 }
 
