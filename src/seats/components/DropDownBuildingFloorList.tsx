@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Building } from "../types/Building";
 import { SelectedBuilding } from "../types/SelectedBuilding";
 import { Floor } from "../types/Floor";
-import { View } from "react-native";
+import {View} from "react-native";
 
 interface DropDownBuildingFloorListProps {
     selectedBuilding: SelectedBuilding;

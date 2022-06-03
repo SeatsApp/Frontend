@@ -44,6 +44,20 @@ export default function useGetSeatStatus(seat: Seat, startHourString: string, en
     return SeatStatus[SeatStatus.PARTIALLY_BOOKED];
 }
 
+export function setStatusMultipleSeats(changedSeats: Seat[], startHour: string, endHour: string, setLoadingAssignStatus: (boolean: boolean) => void) {
+    setLoadingAssignStatus(true);
+    (async () =>
+            changedSeats.forEach((seat, index) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
+                changedSeats[index].seatStatus = useGetSeatStatus(seat, startHour, endHour)
+            })
+    )()
+        .then(() => {
+            setLoadingAssignStatus(false)
+        })
+}
+
 function isReservationEndingBeforeFilterStartHour(startHour: number, endHourReservation: number) {
     return startHour < endHourReservation
 }

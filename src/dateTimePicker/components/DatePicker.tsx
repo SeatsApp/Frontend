@@ -7,6 +7,7 @@ import {theme} from "../../../theme";
 interface Props {
     updateState: (date: Date) => void
     date: Date
+    refetchBuilding: () => void
 }
 
 export default function DatePicker({updateState, date}: Props) {
@@ -16,13 +17,10 @@ export default function DatePicker({updateState, date}: Props) {
         setOpen(false);
     }, [setOpen]);
 
-    const onConfirmSingle = React.useCallback(
-        (params) => {
-            setOpen(false);
-            updateState(params.date);
-        },
-        [setOpen, updateState]
-    );
+    const onConfirmSingle = (params: any) => {
+        setOpen(false);
+        updateState(params.date);
+    }
 
     return (
         <View style={{width: '50%'}}>
