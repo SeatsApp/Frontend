@@ -25,7 +25,7 @@ export default function DatePicker({updateState, date}: Props) {
     );
 
     return (
-        <View>
+        <View style={{width: '50%'}}>
             <Button labelStyle={{color: theme.colors.accent}} color={theme.colors.accent} icon={'calendar'} onPress={() => setOpen(true)} uppercase={false}>
                 {date.toLocaleDateString()}
             </Button>

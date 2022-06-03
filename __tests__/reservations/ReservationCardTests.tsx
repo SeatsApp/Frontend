@@ -60,8 +60,8 @@ test("cancel reservation succesfull test", async () => {
     const { getByTestId } = render(<ReservationCard userReservation={{
         id: 1,
         seatName: "Test",
-        startDateTime: "2022-5-20 15:00:00",
-        endDateTime: "2022-5-20 16:00:00",
+        startDateTime: "2200-5-20 15:00:00",
+        endDateTime: "2200-5-20 16:00:00",
         checkedIn: true
     }} refetchMyReservations={jest.fn()} />);
 
