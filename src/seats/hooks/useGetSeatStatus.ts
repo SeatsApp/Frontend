@@ -1,4 +1,4 @@
-import { getEndTime, getTime } from "../../shared/hooks/DateSplitter";
+import { getEndTime, getTime } from "../../shared/hooks/DateFunctions";
 import { Reservation } from "../types/Reservation";
 import { Seat } from "../types/Seat";
 import { SeatStatus } from "../types/SeatStatus";

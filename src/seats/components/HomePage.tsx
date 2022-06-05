@@ -137,7 +137,7 @@ export default function HomePage() {
             }}>
                 <DatePicker updateState={setDate} date={date}/>
                 <Text style={{color: theme.colors.accent}}>|</Text>
-                <Button onPress={() => setFilterVisible(true)}
+                <Button style={{width: '50%'}} onPress={() => setFilterVisible(true)}
                         color={theme.colors.accent} icon='tune'>filter</Button>
             </View>
             {showSeatsList ?

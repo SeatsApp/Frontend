@@ -7,7 +7,7 @@ import {toast} from "@jamsch/react-native-toastify";
 import {DeviceEventEmitter, Platform, View} from "react-native";
 import {Reservation} from "../types/Reservation";
 import usePushNotifications from "../../pushNotifications/hooks/usePushNotifications";
-import {getDateTimeString, getTime} from "../../shared/hooks/DateSplitter";
+import {getDateTimeString, getTime} from "../../shared/hooks/DateFunctions";
 import {theme} from "../../../theme";
 
 interface Props {
