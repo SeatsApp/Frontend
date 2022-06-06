@@ -26,12 +26,13 @@ export default function useBuilding() {
         };
     }
 
-    function readAllBuildings() {
-        const { data: allBuildings, loading } = useGet<Building[]>(`/api/buildings`, []);
+    function readAllBuildings(retrieveImmediately = true) {
+        const { data: allBuildings, loading, refetch } = useGet<Building[]>(`/api/buildings`, [], retrieveImmediately);
 
         return {
             allBuildings,
-            loading
+            loading,
+            refetch
         };
     }
 

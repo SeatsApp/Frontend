@@ -2,14 +2,12 @@ import DropDown from "react-native-paper-dropdown";
 import React, { useState } from 'react'
 import { Building } from "../types/Building";
 import { SelectedBuilding } from "../types/SelectedBuilding";
-import useBuilding from "../hooks/useBuilding";
 import { Floor } from "../types/Floor";
-import {View} from "react-native";
-import LoadingScreen from "../../shared/components/LoadingScreen";
+import { View } from "react-native";
 
 interface DropDownBuildingFloorListProps {
     selectedBuilding: SelectedBuilding;
-    refetchBuilding: () => void;
+    allBuildings: Building[]
 }
 
 interface ListProps {
@@ -17,11 +15,8 @@ interface ListProps {
     value: string;
 }
 
-export default function DropDownBuildingFloorList({ selectedBuilding, refetchBuilding }
+export default function DropDownBuildingFloorList({ selectedBuilding, allBuildings }
     : DropDownBuildingFloorListProps) {
-    const { readAllBuildings } = useBuilding();
-    const { allBuildings, loading: loadingAllBuildings } = readAllBuildings()
-
     const [showBuildingDropDown, setShowBuildingDropDown] = useState<boolean>(false);
     const [showFloorDropDown, setShowFloorDropDown] = useState<boolean>(false);
 
@@ -65,20 +60,11 @@ export default function DropDownBuildingFloorList({ selectedBuilding, refetchBui
 
         selectedBuilding.buildingId = Number(newBuildingId)
         selectedBuilding.floorId = foundFloorId
-        refetchBuilding()
     }
 
     const clickFloor = (newFloorId: string) => {
         selectedBuilding.floorId = Number(newFloorId)
-        refetchBuilding()
     }
-
-    if (loadingAllBuildings) {
-        return (
-            <LoadingScreen />
-        )
-    }
-
 
     return (
         <View>

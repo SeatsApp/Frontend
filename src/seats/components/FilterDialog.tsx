@@ -6,6 +6,7 @@ import { Button, Card, Dialog, IconButton, Title } from "react-native-paper";
 import { theme } from "../../../theme";
 import DropDownBuildingFloorList from './DropDownBuildingFloorList';
 import { SelectedBuilding } from '../types/SelectedBuilding';
+import { Building } from '../types/Building';
 
 interface DialogProps {
     setStartTime: Dispatch<SetStateAction<string>>;
@@ -13,17 +14,19 @@ interface DialogProps {
     startTime: string;
     endTime: string;
     visible: boolean;
+    allBuildings: Building[];
     setVisible: Dispatch<SetStateAction<boolean>>;
     selectedBuilding: SelectedBuilding;
     refetchBuilding: () => void;
 }
 
 export default function FilterDialog({ setEndTime, setStartTime, setVisible, refetchBuilding,
-    startTime, endTime, visible, selectedBuilding }: DialogProps) {
+    startTime, endTime, visible, selectedBuilding, allBuildings }: DialogProps) {
     const [chosenStartTime, setChosenStartTime] = useState<string>(startTime);
     const [chosenEndTime, setChosenEndTime] = useState<string>(endTime);
 
     const onClick = () => {
+        refetchBuilding()
         setStartTime(chosenStartTime)
         setEndTime(chosenEndTime)
         setVisible(false)
@@ -40,9 +43,9 @@ export default function FilterDialog({ setEndTime, setStartTime, setVisible, ref
                     height: '100%', alignSelf: 'center',
                     margin: 5, display: 'flex', flexDirection: 'column'
                 }}>
-                    <IconButton testID={'iconButton'} style={{alignSelf: 'flex-end'}} icon={'close'} onPress={() => setVisible(false)}/>
-                    <ScrollView style={{width: '100%'}}>
-                        <Card style={{margin: 5}}>
+                    <IconButton testID={'iconButton'} style={{ alignSelf: 'flex-end' }} icon={'close'} onPress={() => setVisible(false)} />
+                    <ScrollView style={{ width: '100%' }}>
+                        <Card style={{ margin: 5 }}>
                             <Card.Content>
                                 <View style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Title>Available:</Title>
@@ -68,8 +71,8 @@ export default function FilterDialog({ setEndTime, setStartTime, setVisible, ref
                             <Card.Content>
                                 <View style={{ display: 'flex', flexDirection: 'column' }}>
                                     <Title>Selected building and floor:</Title>
-                                    <DropDownBuildingFloorList selectedBuilding={selectedBuilding} 
-                                    refetchBuilding={refetchBuilding} />
+                                    <DropDownBuildingFloorList selectedBuilding={selectedBuilding}
+                                        allBuildings={allBuildings} />
                                 </View>
                             </Card.Content>
                         </Card>
