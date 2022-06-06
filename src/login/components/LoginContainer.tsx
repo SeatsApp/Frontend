@@ -2,8 +2,9 @@ import React, { useEffect } from "react"
 import useLogin from "../hooks/useLogin";
 import { OpenURLButton } from "./OpenUrlButton"
 import * as SecureStore from 'expo-secure-store';
-import { Platform, Linking, View, ImageBackground } from "react-native";
-import { backendUrl } from '../../config/EnvironmentVariableConfig'
+import {Platform, Linking, View, ImageBackground} from "react-native";
+import {backendUrl} from "../../config/EnvironmentVariableConfig";
+import LoadingScreen from "../../shared/components/LoadingScreen";
 
 interface LoginContainerProps {
     children: JSX.Element;
@@ -14,7 +15,7 @@ interface LinkingProps {
 }
 
 export const LoginContainer = ({ children }: LoginContainerProps) => {
-    const { loggedIn, checkLoggedIn } = useLogin();
+    const { loggedIn, checkLoggedIn, loading } = useLogin();
 
     const urlEventHandler = async (event: LinkingProps) => {
         let jwtToken = event.url.split("=")[1];
@@ -59,7 +60,7 @@ export const LoginContainer = ({ children }: LoginContainerProps) => {
                     flex: 1,
                     justifyContent: "center"
                 }} source={require('../../../assets/cronosLogin.png')}>
-                    <OpenURLButton url={loginUrl} />
+                    {loading ?  <LoadingScreen /> : <OpenURLButton url={loginUrl} />}
                 </ImageBackground>
             </View>
         )

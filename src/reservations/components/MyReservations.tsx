@@ -2,7 +2,8 @@ import React from "react";
 import useGetMyReservations from "../hooks/useGetMyReservations";
 import {UserReservation} from "../type/UserReservation";
 import ReservationCard from "./ReservationCard";
-import {ImageBackground, ScrollView} from "react-native";
+import { ImageBackground, ScrollView} from "react-native";
+import LoadingScreen from "../../shared/components/LoadingScreen";
 import {getDateMilliseconds} from "../../shared/hooks/DateFunctions";
 
 export function sortReservations(reservation1: UserReservation, reservation2: UserReservation): number {
@@ -17,13 +18,14 @@ export function sortReservations(reservation1: UserReservation, reservation2: Us
 }
 
 export default function MyReservations() {
-    const {userReservations, refetchSeats} = useGetMyReservations()
+    const {userReservations, refetchSeats, loading} = useGetMyReservations()
 
     return (
         <ImageBackground resizeMode='cover' style={{
             flex: 1,
             justifyContent: "center"
         }} source={require('../../../assets/background.png')}>
+            {loading && <LoadingScreen />}
             <ScrollView>
                 {userReservations.sort(sortReservations).map((userReservation: UserReservation) => (
                     <ReservationCard key={userReservation.id} userReservation={userReservation}

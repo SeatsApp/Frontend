@@ -4,7 +4,8 @@ import { Building } from "../types/Building";
 import { SelectedBuilding } from "../types/SelectedBuilding";
 import useBuilding from "../hooks/useBuilding";
 import { Floor } from "../types/Floor";
-import { View } from "react-native";
+import {View} from "react-native";
+import LoadingScreen from "../../shared/components/LoadingScreen";
 
 interface DropDownBuildingFloorListProps {
     selectedBuilding: SelectedBuilding;
@@ -72,9 +73,12 @@ export default function DropDownBuildingFloorList({ selectedBuilding, refetchBui
         refetchBuilding()
     }
 
-    if (!loadingAllBuildings) {
-        <View></View>
+    if (loadingAllBuildings) {
+        return (
+            <LoadingScreen />
+        )
     }
+
 
     return (
         <View>

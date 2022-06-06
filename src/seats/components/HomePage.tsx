@@ -15,6 +15,7 @@ import FilterDialog from "./FilterDialog";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { RootStackParamList } from "../../../App";
 import { SelectedBuilding } from '../types/SelectedBuilding';
+import LoadingScreen from "../../shared/components/LoadingScreen";
 
 type homeScreenProp = NavigationProp<RootStackParamList, 'Home'>;
 
@@ -41,7 +42,7 @@ export default function HomePage() {
     });
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { selectedBuilding: foundBuilding, refetchBuilding: refetchSelectedBuilding } =
+    const { selectedBuilding: foundBuilding, refetchBuilding: refetchSelectedBuilding, loading: loadingBuildings } =
         readSelectedBuildingByDate(1, 2, date.toJSON().split("T")[0]);
 
     const refetchBuilding = (() => {
@@ -104,7 +105,6 @@ export default function HomePage() {
     }, [startTime, endTime])
 
     return (
-
         <View style={{
             flexShrink: 1,
             height: '100%',
@@ -120,6 +120,9 @@ export default function HomePage() {
                     <ReserveSeatDialog date={date} visible={dialogVisible} setDialogVisible={setDialogVisible}
                         seat={clickedSeat} startTime={startTime} endTime={endTime} />
                 </Portal>
+            }
+            {
+                  loading && loadingBuildings && <LoadingScreen />
             }
             <Portal>
                 <FilterDialog endTime={endTime} setEndTime={setEndTime} setStartTime={setStartTime}
