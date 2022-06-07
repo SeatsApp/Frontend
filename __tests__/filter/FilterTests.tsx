@@ -20,7 +20,7 @@ test("renders the filter page correctly for all options", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />).toJSON();
+        refetchBuilding={jest.fn()} allBuildings={[]} />).toJSON();
     expect(tree).toMatchSnapshot();
 
     const tree2 = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'12:00'}
@@ -32,7 +32,8 @@ test("renders the filter page correctly for all options", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />).toJSON();
+        refetchBuilding={jest.fn()}
+        allBuildings={[]} />).toJSON();
     expect(tree2).toMatchSnapshot();
 
     const tree3 = render(<FilterDialog setStartTime={jest.fn()} setEndTime={jest.fn()} startTime={'00:00'}
@@ -44,7 +45,8 @@ test("renders the filter page correctly for all options", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />).toJSON();
+        refetchBuilding={jest.fn()}
+        allBuildings={[]} />).toJSON();
     expect(tree3).toMatchSnapshot();
 });
 
@@ -64,7 +66,8 @@ test("handle shortcut buttons correct", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />);
+        refetchBuilding={jest.fn()}
+        allBuildings={[]} />);
 
     act(() => {
         fireEvent.press(getByText("Forenoon"));
@@ -104,7 +107,8 @@ test("handle filter button correct", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />);
+        refetchBuilding={jest.fn()}
+        allBuildings={[]} />);
 
     act(() => {
         fireEvent.press(getByText("Filter"));
@@ -129,7 +133,8 @@ test("handle close button correct", () => {
             floorPoints: [],
             seats: []
         }}
-        refetchBuilding={jest.fn()} />);
+        refetchBuilding={jest.fn()}
+        allBuildings={[]} />);
     act(() => {
         fireEvent.press(getByTestId("iconButton"));
     });
