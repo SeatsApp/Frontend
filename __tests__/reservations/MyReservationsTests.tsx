@@ -1,11 +1,16 @@
 import React from "react";
-import renderer from "react-test-renderer";
 import { mocked } from "ts-jest/utils";
 import AxiosClient from "../../src/utils/AxiosClient";
 import { AxiosPromise } from "axios";
 import MyReservations, {sortReservations} from "../../src/reservations/components/MyReservations";
+import {render} from "@testing-library/react-native";
 
 jest.mock("../../src/utils/AxiosClient");
+
+beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation();
+    jest.spyOn(console, 'error').mockImplementation();
+});
 
 test("renders the myReservations correctly", () => {
     const jsonSeats = {
@@ -29,7 +34,18 @@ test("renders the myReservations correctly", () => {
 
     mocked(AxiosClient).mockResolvedValue(Promise.resolve(jsonSeats) as unknown as AxiosPromise<void>);
 
-    const tree = renderer.create(<MyReservations />).toJSON();
+    const tree = render(<MyReservations />).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+test("renders the myReservations correctly", () => {
+    const json = {
+        data: [],
+    }
+
+    mocked(AxiosClient).mockResolvedValue(Promise.resolve(json) as unknown as AxiosPromise<void>);
+
+    const tree = render(<MyReservations />).toJSON();
     expect(tree).toMatchSnapshot();
 });
 

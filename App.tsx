@@ -44,9 +44,9 @@ export default function App() {
                     <NavigationContainer>
                         <ToastContainer/>
                         <Stack.Navigator initialRouteName='Home'>
-                            <Stack.Screen name='Home' component={HomePage}/>
-                            <Stack.Screen name='CheckIn' component={CheckIn}/>
-                            <Stack.Screen name='MyReservations' component={MyReservations}/>
+                            <Stack.Screen name='Home' component={HomePage} options={{headerTitleAlign: 'center'}}/>
+                            <Stack.Screen name='CheckIn' component={CheckIn} options={{headerTitleAlign: 'center', title: 'Check in'}}/>
+                            <Stack.Screen name='MyReservations' component={MyReservations} options={{headerTitleAlign: 'center', title: 'Your reservations'}}/>
                         </Stack.Navigator>
                     </NavigationContainer>
             </LoginContainer>

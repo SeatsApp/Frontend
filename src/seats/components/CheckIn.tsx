@@ -42,7 +42,8 @@ export default function CheckIn() {
                                 style={StyleSheet.absoluteFillObject}
                 />
                 {scanned &&
-                    <Button mode='contained' onPress={() => setScanned(false)}>Tap to Scan Again</Button>}
+                    <Button mode='contained' onPress={() => setScanned(false)}>Tap to Scan Again</Button>
+                }
                 <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold', marginTop: 5}}>
                     Scan the QR code on the desk you reserved to check in.
                 </Text>

@@ -92,10 +92,10 @@ export default function HomePage() {
                 justifyContent: "center"
             }} source={require('../../../assets/cronosLogin.png')}>
                 <ActionMenu />
+                <DateFilterButtons selectedBuilding={selectedBuilding} date={date} setDate={setDate} setFilterVisible={setFilterVisible} refetchBuilding={refetchBuilding}/>
                 {
                     (loading || loadingBuilding || loadingAllBuildings) && <LoadingScreen />
                 }
-                <DateFilterButtons selectedBuilding={selectedBuilding} date={date} setDate={setDate} setFilterVisible={setFilterVisible} refetchBuilding={refetchBuilding}/>
                 <Portal>
                     <FilterDialog endTime={endTime} setEndTime={setEndTime} setStartTime={setStartTime}
                         setVisible={setFilterVisible} startTime={startTime} visible={filterVisible}
