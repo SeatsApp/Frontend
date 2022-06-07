@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import ActionMenu from './ActionMenu'
-import CardSeat from './CardSeat';
-import { Seat } from '../types/Seat';
-import BuildingFloorPlan from '../../svg/components/BuildingFloorPlan';
-import { DeviceEventEmitter, View, ScrollView, ImageBackground } from 'react-native';
-import DatePicker from "../../dateTimePicker/components/DatePicker";
-import { Button, Portal, ToggleButton, Text } from "react-native-paper";
-import ReserveSeatDialog from './ReserveSeatDialog';
-import useGetSeatStatus from '../hooks/useGetSeatStatus';
+import { DeviceEventEmitter, View, ImageBackground } from 'react-native';
+import { Portal, ToggleButton } from "react-native-paper";
+import {setStatusMultipleSeats} from '../hooks/useGetSeatStatus';
 import useBuilding from '../hooks/useBuilding';
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../../theme";
 import FilterDialog from "./FilterDialog";
-import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { RootStackParamList } from "../../../App";
 import { SelectedBuilding } from '../types/SelectedBuilding';
 import LoadingScreen from "../../shared/components/LoadingScreen";
+import DateFilterButtons from "./DateFilterButtons";
+import SeatsOverview from "./SeatsOverview";
 
 type homeScreenProp = NavigationProp<RootStackParamList, 'Home'>;
 
@@ -29,9 +25,6 @@ export default function HomePage() {
     const [endTime, setEndTime] = useState("24:00");
     const [filterVisible, setFilterVisible] = useState<boolean>(false);
 
-    const [dialogVisible, setDialogVisible] = useState<boolean>(false);
-    const [clickedSeat, setClickedSeat] = useState<Seat | undefined>(undefined);
-
     const [selectedBuilding, setSelectedBuilding] = useState<SelectedBuilding>({
         buildingId: 0,
         buildingName: "",
@@ -42,10 +35,10 @@ export default function HomePage() {
     });
     const [loading, setLoading] = useState<boolean>(false);
 
+    const { allBuildings, loading: loadingAllBuildings, refetch: refetchAllBuildings } = readAllBuildings(false)
+
     const { selectedBuilding: foundBuilding, refetchBuilding: refetchSelectedBuilding, loading: loadingBuilding } =
         readSelectedBuildingByDate(1, 2, date.toJSON().split("T")[0]);
-
-    const { allBuildings, loading: loadingAllBuildings, refetch: refetchAllBuildings } = readAllBuildings(false)
 
     const refetchBuilding = (() => {
         refetchSelectedBuilding(selectedBuilding.buildingId,
@@ -66,51 +59,27 @@ export default function HomePage() {
                         backgroundColor: showSeatsList ? theme.colors.primary : '#fff'
                     }}
                     color={showSeatsList ? '#fff' : theme.colors.primary}
-                    icon={'format-list-text'} onPress={onToggleSwitch}
+                    icon={'format-list-text'} onPress={() => setShowSeatsList((c) => !c)}
 
                 />
             ),
         });
     }, [navigation, showSeatsList])
 
-    const onToggleSwitch = () => {
-        setShowSeatsList((c) => !c);
-    };
-
-
-    const updateDialog = (seat: Seat, visible: boolean) => {
-        setClickedSeat(seat)
-        setDialogVisible(visible)
-    };
-
-    const setStatusForSeats = (changedSeats: Seat[], startHour: string, endHour: string, setLoadingAssignStatus: (boolean: boolean) => void) => {
-        setLoadingAssignStatus(true);
-        (async () =>
-            changedSeats.forEach((seat, index) => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-expect-error
-                changedSeats[index].seatStatus = useGetSeatStatus(seat, startHour, endHour)
-            })
-        )()
-            .then(() => {
-                setLoadingAssignStatus(false)
-            })
-    }
-
     useEffect(() => {
-        setStatusForSeats(foundBuilding.seats, startTime, endTime, setLoading)
+        setStatusMultipleSeats(foundBuilding.seats, startTime, endTime, setLoading)
         setSelectedBuilding(foundBuilding)
     }, [foundBuilding])
 
     useEffect(() => {
-        setStatusForSeats(selectedBuilding.seats, startTime, endTime, setLoading)
+        setStatusMultipleSeats(selectedBuilding.seats, startTime, endTime, setLoading)
     }, [startTime, endTime])
 
     useEffect(() => {
         if (allBuildings.length === 0) {
             refetchAllBuildings()
         }
-    }, [loadingBuilding !== true])
+    }, [!loadingBuilding])
 
     return (
         <View style={{
@@ -123,51 +92,17 @@ export default function HomePage() {
                 justifyContent: "center"
             }} source={require('../../../assets/cronosLogin.png')}>
                 <ActionMenu />
-                {clickedSeat !== undefined &&
-                    <Portal>
-                        <ReserveSeatDialog date={date} visible={dialogVisible} setDialogVisible={setDialogVisible}
-                            seat={clickedSeat} startTime={startTime} endTime={endTime} />
-                    </Portal>
-                }
                 {
                     (loading || loadingBuilding || loadingAllBuildings) && <LoadingScreen />
                 }
+                <DateFilterButtons selectedBuilding={selectedBuilding} date={date} setDate={setDate} setFilterVisible={setFilterVisible} refetchBuilding={refetchBuilding}/>
                 <Portal>
                     <FilterDialog endTime={endTime} setEndTime={setEndTime} setStartTime={setStartTime}
                         setVisible={setFilterVisible} startTime={startTime} visible={filterVisible}
                         selectedBuilding={selectedBuilding}
                         refetchBuilding={refetchBuilding} allBuildings={allBuildings} />
                 </Portal>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    margin: 5,
-                    justifyContent: 'space-evenly',
-                    backgroundColor: theme.colors.primary
-                }}>
-                    <DatePicker updateState={setDate} date={date} />
-                    <Text style={{ color: theme.colors.accent }}>|</Text>
-                    <Button style={{ width: '50%' }} onPress={() => setFilterVisible(true)}
-                        color={theme.colors.accent} icon='tune'>filter</Button>
-                </View>
-                {showSeatsList ?
-                    <ScrollView>
-                        <View>
-                            {selectedBuilding.seats.map((seat: Seat) => (
-                                <CardSeat updateDialog={updateDialog} key={seat.id} seat={seat} />
-                            ))}
-                        </View>
-                    </ScrollView> :
-                    <ReactNativeZoomableView
-                        maxZoom={30}
-                        contentWidth={300}
-                        contentHeight={150}
-                    >
-                        <BuildingFloorPlan updateDialog={updateDialog} seats={selectedBuilding.seats}
-                            floorPoints={selectedBuilding.floorPoints} />
-                    </ReactNativeZoomableView>
-                }
+                <SeatsOverview  date={date} endTime={endTime} selectedBuilding={selectedBuilding} showSeatsList={showSeatsList} startTime={startTime}/>
             </ImageBackground>
         </View>
     )

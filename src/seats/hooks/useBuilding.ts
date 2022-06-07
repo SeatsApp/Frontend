@@ -15,8 +15,8 @@ export default function useBuilding() {
                     seats: []
                 });
 
-        const refetchBuilding = (refetchBuildingId: number, refetchFloorId: number, refetchDate: string) => {
-            refetchFilterBuilding(`/api/buildings/${refetchBuildingId}/floors/${refetchFloorId}?date=${refetchDate}`)
+        const refetchBuilding = async (refetchBuildingId: number, refetchFloorId: number, refetchDate: string) => {
+            await refetchFilterBuilding(`/api/buildings/${refetchBuildingId}/floors/${refetchFloorId}?date=${refetchDate}`)
         }
 
         return {
