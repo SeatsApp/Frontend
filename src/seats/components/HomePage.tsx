@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ActionMenu from './ActionMenu'
 import { DeviceEventEmitter, View, ImageBackground } from 'react-native';
 import { Portal, ToggleButton } from "react-native-paper";
-import {setStatusMultipleSeats} from '../hooks/useGetSeatStatus';
+import { setStatusMultipleSeats } from '../hooks/useGetSeatStatus';
 import useBuilding from '../hooks/useBuilding';
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { theme } from "../../../theme";
@@ -35,10 +35,10 @@ export default function HomePage() {
     });
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { allBuildings, loading: loadingAllBuildings, refetch: refetchAllBuildings } = readAllBuildings(false)
+    const { allBuildings, loading: loadingAllBuildings } = readAllBuildings()
 
     const { selectedBuilding: foundBuilding, refetchBuilding: refetchSelectedBuilding, loading: loadingBuilding } =
-        readSelectedBuildingByDate(1, 2, date.toJSON().split("T")[0]);
+        readSelectedBuildingByDate(1, 2, date.toJSON().split("T")[0], false);
 
     const refetchBuilding = (() => {
         refetchSelectedBuilding(selectedBuilding.buildingId,
@@ -76,10 +76,16 @@ export default function HomePage() {
     }, [startTime, endTime])
 
     useEffect(() => {
-        if (allBuildings.length === 0) {
-            refetchAllBuildings()
+        if (foundBuilding.buildingId === 0 && allBuildings.length !== 0) {
+            const buildingId = allBuildings[0].id
+            const floorId = allBuildings[0].floors[0].id
+            if (buildingId !== undefined && floorId !== undefined) {
+                selectedBuilding.buildingId = buildingId
+                selectedBuilding.floorId = floorId
+            }
+            refetchBuilding()
         }
-    }, [!loadingBuilding])
+    }, [!loadingAllBuildings])
 
     return (
         <View style={{
@@ -92,7 +98,7 @@ export default function HomePage() {
                 justifyContent: "center"
             }} source={require('../../../assets/cronosLogin.png')}>
                 <ActionMenu />
-                <DateFilterButtons selectedBuilding={selectedBuilding} date={date} setDate={setDate} setFilterVisible={setFilterVisible} refetchBuilding={refetchBuilding}/>
+                <DateFilterButtons selectedBuilding={selectedBuilding} date={date} setDate={setDate} setFilterVisible={setFilterVisible} refetchBuilding={refetchBuilding} />
                 {
                     (loading || loadingBuilding || loadingAllBuildings) && <LoadingScreen />
                 }
@@ -102,7 +108,7 @@ export default function HomePage() {
                         selectedBuilding={selectedBuilding}
                         refetchBuilding={refetchBuilding} allBuildings={allBuildings} />
                 </Portal>
-                <SeatsOverview  date={date} endTime={endTime} selectedBuilding={selectedBuilding} showSeatsList={showSeatsList} startTime={startTime}/>
+                <SeatsOverview date={date} endTime={endTime} selectedBuilding={selectedBuilding} showSeatsList={showSeatsList} startTime={startTime} />
             </ImageBackground>
         </View>
     )
