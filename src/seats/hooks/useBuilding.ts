@@ -3,7 +3,7 @@ import { Building } from '../types/Building';
 import { SelectedBuilding } from '../types/SelectedBuilding';
 
 export default function useBuilding() {
-    function readSelectedBuildingByDate(buildingId: number, floorId: number, date: string) {
+    function readSelectedBuildingByDate(buildingId: number, floorId: number, date: string, retrieveImmediately = true) {
         const { data: selectedBuilding, refetchFilter: refetchFilterBuilding, loading } =
             useGet<SelectedBuilding>(`/api/buildings/${buildingId}/floors/${floorId}?date=${date}`,
                 {
@@ -13,7 +13,7 @@ export default function useBuilding() {
                     floorName: "",
                     floorPoints: [],
                     seats: []
-                });
+                }, retrieveImmediately);
 
         const refetchBuilding = async (refetchBuildingId: number, refetchFloorId: number, refetchDate: string) => {
             await refetchFilterBuilding(`/api/buildings/${refetchBuildingId}/floors/${refetchFloorId}?date=${refetchDate}`)

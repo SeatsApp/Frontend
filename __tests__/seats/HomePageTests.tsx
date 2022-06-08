@@ -1,13 +1,13 @@
-import {AxiosPromise} from "axios";
+import { AxiosPromise } from "axios";
 import React from "react";
-import {mocked} from "ts-jest/utils";
+import { mocked } from "ts-jest/utils";
 import HomePage from "../../src/seats/components/HomePage";
 import useSeat from "../../src/shared/hooks/useSeat";
 import AxiosClient from "../../src/utils/AxiosClient";
-import {Seat} from "../../src/seats/types/Seat";
-import {SeatStatus} from "../../src/seats/types/SeatStatus";
-import {render} from "@testing-library/react-native";
-import {Provider} from "react-native-paper";
+import { Seat } from "../../src/seats/types/Seat";
+import { SeatStatus } from "../../src/seats/types/SeatStatus";
+import { render } from "@testing-library/react-native";
+import { Provider } from "react-native-paper";
 
 
 beforeEach(() => {
@@ -28,9 +28,18 @@ jest.mock('@react-navigation/native', () => {
 });
 
 jest.mock("../../src/utils/AxiosClient");
-const {readSeats} = useSeat();
+const { readSeats } = useSeat();
 
 test("renders the homepage correctly", () => {
+    const jsonAllBuildings = {
+        data: [{
+            id: 5,
+            floors: [{
+                id: 4
+            }]
+        }]
+    }
+
     const jsonBuilding = {
         data: {
             buildingId: 1,
@@ -53,9 +62,10 @@ test("renders the homepage correctly", () => {
     }
 
     // mock to resolve a Promise<void>
-    mocked(AxiosClient).mockResolvedValue(jsonBuilding as unknown as AxiosPromise<void>);
+    mocked(AxiosClient).mockResolvedValueOnce(jsonAllBuildings as unknown as AxiosPromise<void>)
+        .mockResolvedValueOnce(jsonBuilding as unknown as AxiosPromise<void>);
 
-    const tree = render(<Provider><HomePage/></Provider>).toJSON();
+    const tree = render(<Provider><HomePage /></Provider>).toJSON();
     expect(tree).toMatchSnapshot();
     expect(mockedNavigate).toHaveBeenCalledTimes(2);
 });
@@ -92,7 +102,7 @@ test("should call api with correct parameters", async () => {
     jest.spyOn(React, 'useEffect')
         .mockImplementation()
 
-    const {seats: foundSeats} = readSeats();
+    const { seats: foundSeats } = readSeats();
 
     expect(foundSeats).toBe(seats)
 });
