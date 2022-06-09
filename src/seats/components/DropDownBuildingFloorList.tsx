@@ -28,7 +28,7 @@ export default function DropDownBuildingFloorList({ selectedBuilding, allBuildin
             const length = floorList.length
             floorList[length] = {
                 label: floor.name,
-                value: floor.id.toLocaleString(),
+                value: floor.id.toString(),
             }
         });
     }
@@ -37,7 +37,7 @@ export default function DropDownBuildingFloorList({ selectedBuilding, allBuildin
         const buildingsLength = buildingList.length
         buildingList[buildingsLength] = {
             label: building.name,
-            value: building.id.toLocaleString(),
+            value: building.id.toString(),
         }
 
         if (selectedBuilding.buildingId === building.id) {
@@ -74,7 +74,7 @@ export default function DropDownBuildingFloorList({ selectedBuilding, allBuildin
                 visible={showBuildingDropDown}
                 showDropDown={() => setShowBuildingDropDown(true)}
                 onDismiss={() => setShowBuildingDropDown(false)}
-                value={selectedBuilding.buildingId.toLocaleString()}
+                value={selectedBuilding.buildingId.toString()}
                 setValue={clickBuilding}
                 list={buildingList}
                 dropDownStyle={{ marginTop: 0 }}
@@ -85,7 +85,7 @@ export default function DropDownBuildingFloorList({ selectedBuilding, allBuildin
                 visible={showFloorDropDown}
                 showDropDown={() => setShowFloorDropDown(true)}
                 onDismiss={() => setShowFloorDropDown(false)}
-                value={selectedBuilding.floorId.toLocaleString()}
+                value={selectedBuilding.floorId.toString()}
                 setValue={clickFloor}
                 list={floorList}
                 dropDownStyle={{ marginTop: 0 }}
